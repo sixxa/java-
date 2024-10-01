@@ -4,28 +4,28 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="beba192f-0843-4def-a297-485289d4ab58" name="Changes" comment="">
+    <list default="true" id="73d6c471-f24f-4e35-b53f-fe2e5a50428d" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/java/org/example/MyResource.java" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/src/main/webapp/index.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/.idea/encodings.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/pom.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/src/main/java/org/example/Main.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/src/main/java/org/example/Student.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../databaseConnectivity/hinermateHQL/src/main/resources/hibernate.cfg.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../restDemo/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../restDemo/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../restDemo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../restDemo/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../restDemo/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../restDemo/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -42,11 +42,17 @@
     "accountId": "eb136240-b1db-42ed-a16e-49d83b059fcb"
   }
 }]]></component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
   <component name="ProjectColorInfo"><![CDATA[{
-  "customColor": "",
-  "associatedIndex": 3
+  "associatedIndex": 4
 }]]></component>
-  <component name="ProjectId" id="2mmtEFN3oLcoZUTey6O7YoHFgts" />
+  <component name="ProjectId" id="2mprpvCPXTyXqZaatlfL27f7090" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -55,17 +61,49 @@
   "keyToString": {
     "Maven. [org.apache.maven.plugins:maven-archetype-plugin:RELEASE:generate].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Smart Tomcat.cat.executor": "Run",
     "git-widget-placeholder": "main",
-    "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RunManager">
+    <configuration name="cat" type="com.poratu.idea.plugins.tomcat">
+      <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
+      <predefined_log_file enabled="true" id="Tomcat Access Log" />
+      <predefined_log_file id="Tomcat Catalina Log" />
+      <predefined_log_file id="Tomcat Manager Log" />
+      <predefined_log_file id="Tomcat Host Manager Log" />
+      <option name="catalinaBase" value="C:\Users\user\.SmartTomcat\restBasic\restBasic" />
+      <option name="contextPath" value="/restBasic" />
+      <option name="docBase" value="$PROJECT_DIR$/src/main/webapp" />
+      <option name="envOptions">
+        <map />
+      </option>
+      <option name="extraClassPath" value="" />
+      <option name="tomcatInfo">
+        <TomcatInfo>
+          <option name="name" value="Apache Tomcat/10.1.30" />
+          <option name="path" value="$PROJECT_DIR$/../../tomcat/apache-tomcat-10.1.30-windows-x64/apache-tomcat-10.1.30" />
+          <option name="version" value="10.1.30.0" />
+        </TomcatInfo>
+      </option>
+      <option name="vmOptions" value="" />
+      <module name="restBasic" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
@@ -77,12 +115,12 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="beba192f-0843-4def-a297-485289d4ab58" name="Changes" comment="" />
-      <created>1727693467439</created>
+      <changelist id="73d6c471-f24f-4e35-b53f-fe2e5a50428d" name="Changes" comment="" />
+      <created>1727784548195</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1727693467439</updated>
-      <workItem from="1727693468402" duration="344000" />
+      <updated>1727784548195</updated>
+      <workItem from="1727784549329" duration="1423000" />
     </task>
     <servers />
   </component>
