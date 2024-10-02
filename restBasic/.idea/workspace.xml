@@ -6,8 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="73d6c471-f24f-4e35-b53f-fe2e5a50428d" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Alien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Alien.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,11 +110,24 @@
       <option name="presentableId" value="Default" />
       <updated>1727784548195</updated>
       <workItem from="1727784549329" duration="1928000" />
-      <workItem from="1727879380206" duration="1282000" />
+      <workItem from="1727879380206" duration="2344000" />
     </task>
+    <task id="LOCAL-00001" summary="finally solved an error after 4 hours">
+      <option name="closed" value="true" />
+      <created>1727881759048</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1727881759048</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="finally solved an error after 4 hours" />
+    <option name="LAST_COMMIT_MESSAGE" value="finally solved an error after 4 hours" />
   </component>
 </project>
