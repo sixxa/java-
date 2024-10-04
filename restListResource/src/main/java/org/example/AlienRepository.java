@@ -34,4 +34,8 @@ public class AlienRepository {
         }
         return null;  // Move return statement outside the loop
     }
+
+    public void create(Alien a1) {
+        aliens.add(a1);
+    }
 }
