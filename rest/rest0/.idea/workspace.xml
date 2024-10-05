@@ -5,7 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="73d6c471-f24f-4e35-b53f-fe2e5a50428d" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../restListResource/src/main/java/org/example/Alien.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../restListResource/src/main/java/org/example/AlienResource.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../restListResource/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../restListResource/pom.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -112,6 +114,7 @@
       <workItem from="1727784549329" duration="1928000" />
       <workItem from="1727879380206" duration="3347000" />
       <workItem from="1727974781092" duration="234000" />
+      <workItem from="1728007080316" duration="127000" />
     </task>
     <task id="LOCAL-00001" summary="finally solved an error after 4 hours">
       <option name="closed" value="true" />
