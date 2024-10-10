@@ -5,12 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="303a8c73-099d-4cbd-9d44-6b5444b58f2b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/org/example/Laptop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/.idea/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/.mvn/jvm.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/.mvn/maven.config" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/Spring.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/pom.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/src/main/java/org/example/Alien.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/src/main/java/org/example/App.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/src/main/java/org/example/Laptop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../spring1AutoWire/src/test/java/org/example/AppTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/spring.xml" beforeDir="false" afterPath="$PROJECT_DIR$/spring.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Alien.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Alien.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/App.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/App.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -107,7 +112,7 @@
       <option name="presentableId" value="Default" />
       <updated>1728471767320</updated>
       <workItem from="1728471768393" duration="1678000" />
-      <workItem from="1728487225183" duration="3134000" />
+      <workItem from="1728487225183" duration="3780000" />
     </task>
     <servers />
   </component>
