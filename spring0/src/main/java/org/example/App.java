@@ -9,8 +9,9 @@ public class App {
         ApplicationContext context = new FileSystemXmlApplicationContext("D:\\java-\\spring0\\spring.xml");
 
 
-        Alien obj = context.getBean(Alien.class);
-        obj.code();
+        Alien obj1 = context.getBean(Alien.class);
+        obj1.code();
+        System.out.println(obj1.getAge());
 
     }
 }
