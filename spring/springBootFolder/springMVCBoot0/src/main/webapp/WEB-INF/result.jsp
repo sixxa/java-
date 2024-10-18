@@ -7,7 +7,9 @@
 <body>
 <h1>Hello, JSP World!</h1>
 
-    Result is : ${sum}
+    Result is : ${alien}
+
+    Welcome back ${name}
 
 </body>
 </html>
