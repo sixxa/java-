@@ -6,10 +6,12 @@ import jakarta.servlet.http.HttpSession;
 import org.example.springmvcboot0.model.Alien;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class HomeController {
@@ -24,14 +26,16 @@ public class HomeController {
         return "index";
     }
 
-    @RequestMapping("/add")
-    public String add(@RequestParam("num1") int i,@RequestParam("num2") int j, ModelMap m){
-        int sum = i+j;
-        m.addAttribute("sum",sum);
-        return "result";
+    @GetMapping("getAliens")
+    public String getAliens(ModelMap m){
+        List<Alien> aliens = Arrays.asList(new Alien(101,"Toka"),new Alien(102,"Navin"));
+        m.addAttribute("result",aliens);
+        return "showAliens";
     }
-    @RequestMapping("/addAlien")
-    public String addalien(@ModelAttribute Alien a){
+
+    @PostMapping("addAlien")
+    public String addAlien(@ModelAttribute Alien a){
+
         return "result";
     }
 
