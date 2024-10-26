@@ -5,11 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="611875a8-0b5b-463c-8dc4-f34c3f606d3c" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/controller/HomeController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/controller/LoginController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/controller/ProductController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/model/Product.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/service/ProductService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/repository/ProductRepo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../projects/springBootPr1/.gitattributes" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../projects/springBootPr1/.gitignore" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../projects/springBootPr1/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" />
@@ -19,16 +15,12 @@
       <change beforePath="$PROJECT_DIR$/../projects/springBootPr1/src/main/java/com/sixa/springbootpr1/SpringBootPr1Application.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../projects/springBootPr1/src/main/resources/application.properties" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../projects/springBootPr1/src/test/java/com/sixa/springbootpr1/SpringBootPr1ApplicationTests.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitattributes" beforeDir="false" afterPath="$PROJECT_DIR$/.gitattributes" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/.mvn/wrapper/maven-wrapper.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/mvnw.cmd" beforeDir="false" afterPath="$PROJECT_DIR$/mvnw.cmd" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/Hello.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/SpringBootPr1Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/SpringBootPr1Application.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/controller/ProductController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/controller/ProductController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/model/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/model/Product.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/service/ProductService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/sixa/springbootpr1/service/ProductService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/sixa/springbootpr1/SpringBootPr1ApplicationTests.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/sixa/springbootpr1/SpringBootPr1ApplicationTests.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -39,6 +31,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -73,6 +66,9 @@
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "com.poratu.idea.plugins.tomcat.setting.TomcatServersConfigurable",
     "vue.rearranger.settings.migration": "true"
   }
@@ -125,7 +121,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1729895331207</updated>
-      <workItem from="1729895332278" duration="5006000" />
+      <workItem from="1729895332278" duration="9514000" />
     </task>
     <servers />
   </component>
