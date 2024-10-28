@@ -1,13 +1,13 @@
-package com.sixa.springbootpr1;
+package com.sixa.springsecex;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringBootPr1Application {
+public class SpringSecExApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(SpringBootPr1Application.class, args);
+        SpringApplication.run(SpringSecExApplication.class, args);
     }
 
 }

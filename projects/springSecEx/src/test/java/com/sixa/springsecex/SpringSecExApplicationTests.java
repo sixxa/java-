@@ -1,10 +1,10 @@
-package com.sixa.springbootpr1;
+package com.sixa.springsecex;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootPr1ApplicationTests {
+class SpringSecExApplicationTests {
 
     @Test
     void contextLoads() {
