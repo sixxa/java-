@@ -1,5 +1,6 @@
-package com.sixa.springsecex;
+package com.sixa.springsecex.controller;
 
+import com.sixa.springsecex.model.Student;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.web.bind.annotation.GetMapping;

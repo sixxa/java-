@@ -1,4 +1,4 @@
-package com.sixa.springsecex;
+package com.sixa.springsecex.model;
 
 public class Student {
 
