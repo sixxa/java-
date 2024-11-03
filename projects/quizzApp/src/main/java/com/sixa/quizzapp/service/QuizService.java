@@ -25,39 +25,51 @@ public class QuizService {
     private QuestionDao questionDao;
 
     public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
-
+        try {
         List<Question> questions = questionDao.findRandomQuestionsByCategory(category, numQ);
-
         Quiz quiz = new Quiz();
         quiz.setTitle(title);
         quiz.setQuestions(questions);
         quizDao.save(quiz);
-
-        return new ResponseEntity<>("success", HttpStatus.OK);
+            return new ResponseEntity<>("success", HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+            return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
-        Optional<Quiz> quiz = quizDao.findById(id);
-        List<Question> questionsFromDB = quiz.get().getQuestions();
-        List<QuestionWrapper> questionsForUsers = new ArrayList<>();
+        try {
+            Optional<Quiz> quiz = quizDao.findById(id);
+            List<Question> questionsFromDB = quiz.get().getQuestions();
+            List<QuestionWrapper> questionsForUsers = new ArrayList<>();
 
-        for (Question q : questionsFromDB) {
-            QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
-            questionsForUsers.add(qw);
+            for (Question q : questionsFromDB) {
+                QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
+                questionsForUsers.add(qw);
+            }
+            return new ResponseEntity<>(questionsForUsers, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return new ResponseEntity<>(questionsForUsers, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
-        Quiz quiz = quizDao.findById(id).get();
-        List<Question> questions = quiz.getQuestions();
-        int right = 0;
-        int i = 0;
-        for (Response response : responses) {
-            if(response.getResponse().equals(questions.get(i).getRightAnswer()))
-                right++;
-            i++;
+        try {
+            Quiz quiz = quizDao.findById(id).get();
+            List<Question> questions = quiz.getQuestions();
+            int right = 0;
+            int i = 0;
+            for (Response response : responses) {
+                if (response.getResponse().equals(questions.get(i).getRightAnswer()))
+                    right++;
+                i++;
+            }
+            return new ResponseEntity<>(right, HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return new ResponseEntity<>(right, HttpStatus.OK);
+        return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }
