@@ -1,7 +1,7 @@
 package com.sixa.quizservice.service;
 
 import com.sixa.quizservice.dao.QuizDao;
-import com.sixa.quizservice.model.Question;
+import com.sixa.quizservice.feign.QuizInterface;
 import com.sixa.quizservice.model.QuestionWrapper;
 import com.sixa.quizservice.model.Quiz;
 import com.sixa.quizservice.model.Response;
@@ -20,55 +20,52 @@ public class QuizService {
     @Autowired
     QuizDao quizDao;
 
-//    @Autowired
-//    private QuestionDao questionDao;
+    @Autowired
+    QuizInterface quizInterface;
 
-//    public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
+    public ResponseEntity<String> createQuiz(String category, int numQ, String title) {
+
+        List<Integer> questions = quizInterface.getQuestionsForQuiz(category, numQ).getBody();
+        Quiz quiz = new Quiz();
+        quiz.setTitle(title);
+        quiz.setQuestionIds(questions);
+        quizDao.save(quiz);
+
+            return new ResponseEntity<>("success", HttpStatus.OK);
+    }
+
+    public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
 //        try {
-//        List<Question> questions = questionDao.findRandomQuestionsByCategory(category, numQ);
-//        Quiz quiz = new Quiz();
-//        quiz.setTitle(title);
-//        quiz.setQuestions(questions);
-//        quizDao.save(quiz);
-//            return new ResponseEntity<>("success", HttpStatus.OK);
+//            Optional<Quiz> quiz = quizDao.findById(id);
+//            List<Question> questionsFromDB = quiz.get().getQuestions();
+//            List<QuestionWrapper> questionsForUsers = new ArrayList<>();
+//
+//            for (Question q : questionsFromDB) {
+//                QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
+//                questionsForUsers.add(qw);
+//            }
+//            return new ResponseEntity<>(questionsForUsers, HttpStatus.OK);
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
-//            return new ResponseEntity<>("error", HttpStatus.INTERNAL_SERVER_ERROR);
-//    }
-
-    public ResponseEntity<List<QuestionWrapper>> getQuizQuestions(Integer id) {
-        try {
-            Optional<Quiz> quiz = quizDao.findById(id);
-            List<Question> questionsFromDB = quiz.get().getQuestions();
-            List<QuestionWrapper> questionsForUsers = new ArrayList<>();
-
-            for (Question q : questionsFromDB) {
-                QuestionWrapper qw = new QuestionWrapper(q.getId(), q.getQuestionTitle(), q.getOption1(), q.getOption2(), q.getOption3(), q.getOption4());
-                questionsForUsers.add(qw);
-            }
-            return new ResponseEntity<>(questionsForUsers, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     public ResponseEntity<Integer> calculateResult(Integer id, List<Response> responses) {
-        try {
-            Quiz quiz = quizDao.findById(id).get();
-            List<Question> questions = quiz.getQuestions();
-            int right = 0;
-            int i = 0;
-            for (Response response : responses) {
-                if (response.getResponse().equals(questions.get(i).getRightAnswer()))
-                    right++;
-                i++;
-            }
-            return new ResponseEntity<>(right, HttpStatus.OK);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            Quiz quiz = quizDao.findById(id).get();
+//            List<Question> questions = quiz.getQuestions();
+//            int right = 0;
+//            int i = 0;
+//            for (Response response : responses) {
+//                if (response.getResponse().equals(questions.get(i).getRightAnswer()))
+//                    right++;
+//                i++;
+//            }
+//            return new ResponseEntity<>(right, HttpStatus.OK);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

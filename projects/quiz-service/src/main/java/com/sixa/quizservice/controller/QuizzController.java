@@ -1,6 +1,7 @@
 package com.sixa.quizservice.controller;
 
 import com.sixa.quizservice.model.QuestionWrapper;
+import com.sixa.quizservice.model.QuizDto;
 import com.sixa.quizservice.model.Response;
 import com.sixa.quizservice.service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class QuizzController {
     QuizService quizService;
 
     @PostMapping("create")
-    public ResponseEntity<String> createQuiz(@RequestParam String category, @RequestParam int numQ, @RequestParam String title) {
-        return quizService.createQuiz(category, numQ, title);
+    public ResponseEntity<String> createQuiz(@RequestBody QuizDto quizDto) {
+        return quizService.createQuiz(quizDto.getCategoryName(), quizDto.getNumQuestions(), quizDto.getTitle());
     }
 
     @GetMapping("get/{id}")
