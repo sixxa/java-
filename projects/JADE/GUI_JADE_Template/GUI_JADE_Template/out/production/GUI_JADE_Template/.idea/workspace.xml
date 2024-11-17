@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="b4ef824e-7eb1-4ea3-983a-4471a3f19bf7" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/GUI_JADE_Template.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/jade.jar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../JADE-bin-4.5.0/jade/License" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../JADE-bin-4.5.0/jade/README" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../../JADE-bin-4.5.0/jade/lib/jade.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GUI.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../MainAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../RandomAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../__MACOSX/._GUI_JADE_Template" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../__MACOSX/GUI_JADE_Template/._.DS_Store" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../__MACOSX/GUI_JADE_Template/._RandomAgent.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../__MACOSX/GUI_JADE_Template/._readme.txt" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../../../.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "sixxa"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/sixxa/java-.git",
+    "accountId": "eb136240-b1db-42ed-a16e-49d83b059fcb"
+  }
+}]]></component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="2oz2qoI0qk7N8J5UJnERVE9rhwE" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.jade.executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/java-/rest/rest1/src/main/webapp",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Libraries",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "settings.editor.selected.configurable": "com.poratu.idea.plugins.tomcat.setting.TomcatServersConfigurable",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="jade" type="Application" factoryName="Application">
+      <option name="MAIN_CLASS_NAME" value="jade.Boot" />
+      <module name="GUI_JADE_Template" />
+      <option name="PROGRAM_PARAMETERS" value="-gui -agents &quot;MainAgent:MainAgent;RandomAgent:RandomAgent;&quot;" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="com.poratu.idea.plugins.tomcat">
+      <predefined_log_file enabled="true" id="Tomcat Localhost Log" />
+      <predefined_log_file enabled="true" id="Tomcat Access Log" />
+      <predefined_log_file id="Tomcat Catalina Log" />
+      <predefined_log_file id="Tomcat Manager Log" />
+      <predefined_log_file id="Tomcat Host Manager Log" />
+      <option name="catalinaBase" value="" />
+      <option name="contextPath" value="\rest1" />
+      <option name="docBase" value="D:\java-\rest\rest1\src\main\webapp" />
+      <option name="extraClassPath" value="" />
+      <option name="tomcatInfo">
+        <TomcatInfo>
+          <option name="name" value="Apache Tomcat/10.1.30" />
+          <option name="path" value="$PROJECT_DIR$/../../../../../tomcat/apache-tomcat-10.1.30-windows-x64/apache-tomcat-10.1.30" />
+          <option name="version" value="10.1.30.0" />
+        </TomcatInfo>
+      </option>
+      <option name="vmOptions" value="" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
+        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="b4ef824e-7eb1-4ea3-983a-4471a3f19bf7" name="Changes" comment="" />
+      <created>1731858280315</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1731858280315</updated>
+      <workItem from="1731858283240" duration="254000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>
