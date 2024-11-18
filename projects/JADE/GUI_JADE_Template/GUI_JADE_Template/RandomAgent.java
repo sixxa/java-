@@ -7,6 +7,7 @@ import jade.domain.FIPAAgentManagement.ServiceDescription;
 import jade.domain.FIPAException;
 import jade.lang.acl.ACLMessage;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class RandomAgent extends Agent {
@@ -14,7 +15,8 @@ public class RandomAgent extends Agent {
     private State state;
     private AID mainAgent;
     private int myId, opponentId;
-    private int N, S, R, I, P;
+    private int N, R;
+    private double F;
     private ACLMessage msg;
 
     protected void setup() {
@@ -52,7 +54,7 @@ public class RandomAgent extends Agent {
     }
 
     private class Play extends CyclicBehaviour {
-        Random random = new Random(1000);
+        Random random = new Random();
         @Override
         public void action() {
             System.out.println(getAID().getName() + ":" + state.name());
@@ -110,7 +112,14 @@ public class RandomAgent extends Agent {
                         if (msg.getPerformative() == ACLMessage.REQUEST /*&& msg.getContent().startsWith("Position")*/) {
                             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
                             msg.addReceiver(mainAgent);
-                            msg.setContent("Position#" + random.nextInt(S));
+                            ArrayList<String> actions = new ArrayList<>();
+                            actions.add("C");
+                            actions.add("D");
+
+                            int randomIndex = random.nextInt(actions.size());
+                            // Get the random element from the list
+                            String randomElement = actions.get(randomIndex);
+                            msg.setContent("Action#" + randomElement);
                             System.out.println(getAID().getName() + " sent " + msg.getContent());
                             send(msg);
                             state = State.s3AwaitingResult;
@@ -143,7 +152,8 @@ public class RandomAgent extends Agent {
          * @return true on success, false on failure
          */
         private boolean validateSetupMessage(ACLMessage msg) throws NumberFormatException {
-            int tN, tS, tR, tI, tP, tMyId;
+            int tN, tR, tMyId;
+            double tF;
             String msgContent = msg.getContent();
 
             String[] contentSplit = msgContent.split("#");
@@ -152,20 +162,17 @@ public class RandomAgent extends Agent {
             tMyId = Integer.parseInt(contentSplit[1]);
 
             String[] parametersSplit = contentSplit[2].split(",");
-            if (parametersSplit.length != 5) return false;
+            if (parametersSplit.length != 3) return false;
             tN = Integer.parseInt(parametersSplit[0]);
-            tS = Integer.parseInt(parametersSplit[1]);
-            tR = Integer.parseInt(parametersSplit[2]);
-            tI = Integer.parseInt(parametersSplit[3]);
-            tP = Integer.parseInt(parametersSplit[4]);
+            tR = Integer.parseInt(parametersSplit[1]);
+            tF = Double.parseDouble(parametersSplit[2]);
+
 
             //At this point everything should be fine, updating class variables
             mainAgent = msg.getSender();
             N = tN;
-            S = tS;
             R = tR;
-            I = tI;
-            P = tP;
+            F = tF;
             myId = tMyId;
             return true;
         }

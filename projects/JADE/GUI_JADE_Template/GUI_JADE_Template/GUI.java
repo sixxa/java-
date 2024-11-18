@@ -184,7 +184,7 @@ public final class GUI extends JFrame implements ActionListener {
         Object[] nullPointerWorkAround = {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"};
 
         Object[][] data = {
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
+                {"Player", "payoff", "stocks", "stock value", "cooperate", "defections", "score", "*", "*", "*"},
                 {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
                 {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
                 {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
@@ -309,6 +309,9 @@ public final class GUI extends JFrame implements ActionListener {
         } else if (e.getSource() instanceof JMenuItem) {
             JMenuItem menuItem = (JMenuItem) e.getSource();
             logLine("Menu " + menuItem.getText());
+        }else if (e.getSource() instanceof JMenuItem && e.getActionCommand().equals("reset_players")) {
+            mainAgent.resetPlayers();
+            logLine("All player statistics have been reset.");
         }
     }
 
