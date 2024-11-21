@@ -10,6 +10,7 @@ public class TheLists {
         colors.add("red");
         colors.add("blue");
         colors.add("green");
+        colors.add("yellow");
 
         System.out.println(colors);
 
