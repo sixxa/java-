@@ -3,7 +3,6 @@ package com.sixa;
 import java.util.Arrays;
 
 public class TheArrays {
-
         public static void main(String[] args) {
             String[] colors = new String[2];
             int[] num = {100,200};
