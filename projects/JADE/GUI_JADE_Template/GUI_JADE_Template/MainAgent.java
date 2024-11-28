@@ -86,55 +86,41 @@ public class MainAgent extends Agent {
         return 0;
     }
 
+    private boolean stopGame = false;  // A flag to stop the game
+    private boolean paused = false;    // A flag to pause the game
+
+    // Method to stop the game
+    public void stopGame() {
+        stopGame = true;
+        gui.logLine("Game is stopping.");
+        // You can add additional logic here, such as sending a stop message to players or performing clean-up tasks
+    }
+
+    // Method to pause the game
+    public void pauseGame() {
+        paused = true;
+        gui.logLine("Game is paused.");
+    }
+
+    // Method to continue the game
+    public void continueGame() {
+        if (paused) {
+            paused = false;
+            gui.logLine("Game is resuming.");
+        } else {
+            gui.logLine("Game is already running.");
+        }
+    }
+
     /**
      * In this behavior this agent manages the course of a match during all the
      * rounds.
      */
     private class GameManager extends SimpleBehaviour {
 
-        private boolean stopGame = false;  // A flag to stop the game
-        private boolean paused = false;    // A flag to pause the game
-
-        // Method to stop the game
-        public void stopGame() {
-            stopGame = true;
-            gui.logLine("Game is stopping.");
-            // You can add additional logic here, such as sending a stop message to players or performing clean-up tasks
-        }
-
-        // Method to pause the game
-        public void pauseGame() {
-            paused = true;
-            gui.logLine("Game is paused.");
-        }
-
-        // Method to continue the game
-        public void continueGame() {
-            if (paused) {
-                paused = false;
-                gui.logLine("Game is resuming.");
-            } else {
-                gui.logLine("Game is already running.");
-            }
-        }
-
         // Modified action method to check for pause/stop/continue condition
         @Override
         public void action() {
-            if (stopGame) {
-                gui.logLine("Game has been stopped.");
-                return; // Exit the action method and stop further processing
-            }
-
-            // Check if the game is paused
-            while (paused) {
-                gui.logLine("Game is paused. Waiting to resume...");
-                try {
-                    Thread.sleep(1000); // Check every second
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
 
             // Assign the IDs to players
             ArrayList<PlayerInformation> players = new ArrayList<>();
@@ -197,11 +183,13 @@ public class MainAgent extends Agent {
                 }
             }
 
+
             // Game over phase
             if (!stopGame) {  // Only proceed with game over if the game was not stopped early
                 gameOver(players);
             }
             gui.updateTable(players);
+
         }
 
 
@@ -423,8 +411,8 @@ public class MainAgent extends Agent {
 
             public GameParametersStruct() {
                 N = 2;
-                R = 1000;
-                F = 0.1;
+                R = 500;
+                F = 0.01;
                 inflationRate = 0.1;
 
             }

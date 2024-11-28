@@ -61,6 +61,18 @@ public final class GUI extends JFrame implements ActionListener {
         setPreferredSize(new Dimension(1000, 600));
         setJMenuBar(createMainMenuBar());
         setContentPane(createMainContentPane());
+
+        JLabel authorLabel = new JLabel("Author: Tornike Sikharulidze");
+        authorLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        authorLabel.setFont(new Font("Arial", Font.PLAIN, 12)); // Set font and size
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridx = 2; // Put it in the rightmost column
+        gc.gridy = GridBagConstraints.RELATIVE; // Put it at the bottom
+        gc.anchor = GridBagConstraints.SOUTHEAST; // Bottom-right corner
+        gc.insets = new Insets(10, 10, 10, 10); // Padding
+        getContentPane().add(authorLabel, gc);
+
+
         pack();
         setVisible(true);
     }
@@ -125,6 +137,7 @@ public final class GUI extends JFrame implements ActionListener {
         gc.gridy = 4;
         gc.weighty = 10;
         leftPanel.add(leftPanelExtraInformation, gc);
+
 
         return leftPanel;
     }
@@ -401,6 +414,14 @@ public final class GUI extends JFrame implements ActionListener {
         if (e.getSource() instanceof JButton) {
             JButton button = (JButton) e.getSource();
             logLine("Button " + button.getText());
+            if (button.getText().equalsIgnoreCase("stop")) {
+                // Pause the process
+                mainAgent.pauseGame();
+                // Define this method to handle pausing logic
+            } else if (button.getText().equalsIgnoreCase("continue")) {
+                // Continue the process
+                mainAgent.continueGame(); // Define this method to handle continuation logic
+            }
         } else if (e.getSource() instanceof JMenuItem) {
             JMenuItem menuItem = (JMenuItem) e.getSource();
             logLine("Menu " + menuItem.getText());
