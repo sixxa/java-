@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,6 +7,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.stream.IntStream;
 
 public final class GUI extends JFrame implements ActionListener {
     JLabel leftPanelRoundsLabel;
@@ -15,6 +18,7 @@ public final class GUI extends JFrame implements ActionListener {
     private JPanel rightPanel;
     private JTextArea rightPanelLoggingTextArea;
     private LoggingOutputStream loggingOutputStream;
+    private static DefaultTableModel tModel;
 
     public GUI() {
         initUI();
@@ -181,6 +185,9 @@ public final class GUI extends JFrame implements ActionListener {
     private JPanel createCentralBottomSubpanel() {
         JPanel centralBottomSubpanel = new JPanel(new GridBagLayout());
 
+
+        String[] columnNames = {"Player", "Reward", "Defects", "Cooperates", "totalSum", "Shares"};
+
         Object[] nullPointerWorkAround = {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"};
 
         Object[][] data = {
@@ -220,6 +227,63 @@ public final class GUI extends JFrame implements ActionListener {
 
         return centralBottomSubpanel;
     }
+
+    public void addRow(String player, String Reward, String defects, String cooperates, String totalSum, String Shares) {
+        tModel.addRow(new Object[]{player, Reward, defects, cooperates, totalSum, Shares});
+    }
+
+    public Object[] getRow(int rowIndex) {
+        return IntStream.range(0, tModel.getColumnCount())
+                .mapToObj(col -> tModel.getValueAt(rowIndex, col))
+                .toArray();
+    }
+
+
+    public static void updateTable(ArrayList<MainAgent.PlayerInformation> players) {
+        for (int i = 0; i < tModel.getRowCount(); i++) {
+            MainAgent.PlayerInformation player = null;
+            for (MainAgent.PlayerInformation p : players) {
+                if (tModel.getValueAt(i, 0).equals(p.aid.getName())) {
+                    player = p;
+                    break;
+                }
+            }
+            if (player == null) continue;
+            tModel.setValueAt(player.currentReward, i, 1);
+            tModel.setValueAt(player.decisionD, i, 2);
+            tModel.setValueAt(player.decisionC, i, 3);
+            tModel.setValueAt(player.currentReward,i,4);
+            tModel.setValueAt(player.Shares, i, 5);
+        }
+    }
+
+    public void updateRow(int rowIndex, String player, double payoff, String move, String total) {
+
+        Object[] row = getRow(rowIndex);
+
+        double new_payoff = Double.parseDouble(row[1].toString()) + payoff;
+
+        logLine(String.valueOf(new_payoff));
+        tModel.setValueAt(player, rowIndex, 0);
+        tModel.setValueAt(new_payoff, rowIndex, 1);
+        if (move.equals("D")) {
+            tModel.setValueAt(Integer.parseInt(row[2].toString()) + 1, rowIndex, 2);
+        }else{
+            tModel.setValueAt(Integer.parseInt(row[3].toString())+1, rowIndex, 3);
+        }
+
+
+        tModel.setValueAt(total, rowIndex, 4);
+    }
+
+    public void updateStockAndPayoff(int rowIndex, String Shares,String Reward){
+        tModel.setValueAt(Reward, rowIndex, 1);
+        tModel.setValueAt(Shares, rowIndex, 5);
+    }
+    public void removeRow(int rowIndex) {
+        tModel.removeRow(rowIndex);
+    }
+
 
     private JPanel createRightPanel() {
         rightPanel = new JPanel(new GridBagLayout());
@@ -309,11 +373,9 @@ public final class GUI extends JFrame implements ActionListener {
         } else if (e.getSource() instanceof JMenuItem) {
             JMenuItem menuItem = (JMenuItem) e.getSource();
             logLine("Menu " + menuItem.getText());
-        }else if (e.getSource() instanceof JMenuItem && e.getActionCommand().equals("reset_players")) {
-            mainAgent.resetPlayers();
-            logLine("All player statistics have been reset.");
         }
     }
+
 
     public class LoggingOutputStream extends OutputStream {
         private JTextArea textArea;

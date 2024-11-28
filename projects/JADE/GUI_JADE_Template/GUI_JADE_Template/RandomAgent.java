@@ -18,6 +18,7 @@ public class RandomAgent extends Agent {
     private int N, R;
     private double F;
     private ACLMessage msg;
+    private String[] moves_list = {"C","D"};
 
     protected void setup() {
         state = State.s0NoConfig;
@@ -55,95 +56,129 @@ public class RandomAgent extends Agent {
 
     private class Play extends CyclicBehaviour {
         Random random = new Random();
+
+
         @Override
         public void action() {
             System.out.println(getAID().getName() + ":" + state.name());
             msg = blockingReceive();
+
             if (msg != null) {
-                System.out.println(getAID().getName() + " received " + msg.getContent() + " from " + msg.getSender().getName()); //DELETEME
-                //-------- Agent logic
+                // Handle agent logic based on the current state
                 switch (state) {
                     case s0NoConfig:
-                        //If INFORM Id#_#_,_,_,_ PROCESS SETUP --> go to state 1
-                        //Else ERROR
+                        // If INFORM Id#_#_,_,_,_ PROCESS SETUP --> go to state 1
                         if (msg.getContent().startsWith("Id#") && msg.getPerformative() == ACLMessage.INFORM) {
-                            boolean parametersUpdated = false;
                             try {
-                                parametersUpdated = validateSetupMessage(msg);
+                                if (validateSetupMessage(msg)) {
+                                    state = State.s1AwaitingGame;
+                                }
                             } catch (NumberFormatException e) {
                                 System.out.println(getAID().getName() + ":" + state.name() + " - Bad message");
                             }
-                            if (parametersUpdated) state = State.s1AwaitingGame;
-
                         } else {
                             System.out.println(getAID().getName() + ":" + state.name() + " - Unexpected message");
                         }
                         break;
+
                     case s1AwaitingGame:
-                        //If INFORM NEWGAME#_,_ PROCESS NEWGAME --> go to state 2
-                        //If INFORM Id#_#_,_,_,_ PROCESS SETUP --> stay at s1
-                        //Else ERROR
-                        //TODO I probably should check if the new game message comes from the main agent who sent the parameters
+                        // Handle game start and setup updates
                         if (msg.getPerformative() == ACLMessage.INFORM) {
-                            if (msg.getContent().startsWith("Id#")) { //Game settings updated
+                            String content = msg.getContent();
+                            if (content.startsWith("Id#")) {
                                 try {
                                     validateSetupMessage(msg);
                                 } catch (NumberFormatException e) {
                                     System.out.println(getAID().getName() + ":" + state.name() + " - Bad message");
                                 }
-                            } else if (msg.getContent().startsWith("NewGame#")) {
-                                boolean gameStarted = false;
+                            } else if (content.startsWith("NewGame#")) {
                                 try {
-                                    gameStarted = validateNewGame(msg.getContent());
+                                    if (validateNewGame(content)) {
+                                        state = State.s2Round;
+                                    }
                                 } catch (NumberFormatException e) {
                                     System.out.println(getAID().getName() + ":" + state.name() + " - Bad message");
                                 }
-                                if (gameStarted) state = State.s2Round;
+                            } else if (content.startsWith("Accounting#")) {
+                                System.out.println(content);  // Handle accounting message
                             }
+                        } else if (msg.getPerformative() == ACLMessage.REQUEST) {
+                            roundOverSharesOperations(msg);  // Handle stock operation requests
                         } else {
                             System.out.println(getAID().getName() + ":" + state.name() + " - Unexpected message");
                         }
                         break;
-                    case s2Round:
-                        //If REQUEST POSITION --> INFORM POSITION --> go to state 3
-                        //If INFORM CHANGED stay at state 2
-                        //If INFORM ENDGAME go to state 1
-                        //Else error
-                        if (msg.getPerformative() == ACLMessage.REQUEST /*&& msg.getContent().startsWith("Position")*/) {
-                            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-                            msg.addReceiver(mainAgent);
-                            ArrayList<String> actions = new ArrayList<>();
-                            actions.add("C");
-                            actions.add("D");
 
-                            int randomIndex = random.nextInt(actions.size());
-                            // Get the random element from the list
-                            String randomElement = actions.get(randomIndex);
-                            msg.setContent("Action#" + randomElement);
-                            System.out.println(getAID().getName() + " sent " + msg.getContent());
-                            send(msg);
+                    case s2Round:
+                        // Handle round actions and game results
+                        if (msg.getPerformative() == ACLMessage.REQUEST) {
+                            ACLMessage response = new ACLMessage(ACLMessage.INFORM);
+                            response.addReceiver(mainAgent);
+                            String randomMove = moves_list[random.nextInt(moves_list.length)];
+                            response.setContent("Action#" + randomMove);
+                            System.out.println(getAID().getName() + " sent " + response.getContent());
+                            send(response);
                             state = State.s3AwaitingResult;
-                        } else if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("Changed#")) {
-                            // Process changed message, in this case nothing
                         } else if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("EndGame")) {
-                            state = State.s1AwaitingGame;
+                            state = State.s1AwaitingGame;  // End of game, return to waiting for game
                         } else {
                             System.out.println(getAID().getName() + ":" + state.name() + " - Unexpected message:" + msg.getContent());
                         }
                         break;
+
                     case s3AwaitingResult:
-                        //If INFORM RESULTS --> go to state 2
-                        //Else error
+                        // If INFORM RESULTS --> go to state 2
                         if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("Results#")) {
-                            //Process results
                             state = State.s2Round;
                         } else {
                             System.out.println(getAID().getName() + ":" + state.name() + " - Unexpected message");
                         }
                         break;
+
+                    default:
+                        System.out.println(getAID().getName() + ":" + state.name() + " - Unknown state");
+                        break;
                 }
             }
         }
+
+
+        private void roundOverSharesOperations(ACLMessage msgReceived) {
+            // Check if the message content starts with "RoundOver"
+            if (msgReceived.getContent().startsWith("RoundOver")) {
+
+                // Split the message content once to avoid calling split() multiple times
+                String[] contentParts = msgReceived.getContent().split("#");
+
+                // Randomly decide between "Buy" or "Sell"
+                String decision = Math.random() > 0.5 ? "Buy" : "Sell";
+
+                // Determine the max amount to operate based on the decision
+                double maxToOperate = 0.0;
+                if (decision.equals("Buy") && contentParts.length > 3) {
+                    maxToOperate = Double.parseDouble(contentParts[3]);
+                } else if (decision.equals("Sell") && contentParts.length > 5) {
+                    maxToOperate = Double.parseDouble(contentParts[5]);
+                }
+
+                // If maxToOperate is non-zero, generate a random value between 0 and maxToOperate
+                if (maxToOperate > 0.0) {
+                    maxToOperate = random.nextDouble();
+                }
+
+                // Create the response message and send it to the main agent
+                ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+                msg.addReceiver(mainAgent);
+                msg.setContent(decision + "#" + maxToOperate);
+
+                // Log the decision
+                System.out.println(getAID().getName() + " decided to " + decision + " " + maxToOperate);
+
+                // Send the message
+                send(msg);
+            }
+        }
+
 
         /**
          * Validates and extracts the parameters from the setup message

@@ -10,15 +10,18 @@ import jade.lang.acl.ACLMessage;
 
 import java.io.PrintStream;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.List;
 
 public class MainAgent extends Agent {
 
-    private ArrayList<PlayerInformation> players;
+
     private GUI gui;
     private AID[] playerAgents;
-    private GameParametersStruct parameters = new GameParametersStruct();
+    private PlayerInformation.GameParametersStruct parameters = new PlayerInformation.GameParametersStruct();
     private String result;
+    private double sharesPrice = 1.5;
+
+
     @Override
     protected void setup() {
         gui = new GUI(this);
@@ -53,12 +56,14 @@ public class MainAgent extends Agent {
             playerAgents = new AID[result.length];
             for (int i = 0; i < result.length; ++i) {
                 playerAgents[i] = result[i].getName(); // Store AID of each player
+
             }
 
             // Convert the AIDs to player names (just their name for the GUI display)
             String[] playerNames = new String[playerAgents.length];
             for (int i = 0; i < playerAgents.length; i++) {
                 playerNames[i] = playerAgents[i].getName(); // Get the name of each player
+                gui.addRow(playerAgents[i].getName(), "x", "x", "x", "x", "x");
             }
 
             // Update the GUI to show the player list
@@ -89,111 +94,198 @@ public class MainAgent extends Agent {
     private class GameManager extends SimpleBehaviour {
 
 
+
         @Override
         public void action() {
-
-
-            gui.logLine("GameManager behavior running...");
-            //Assign the IDs
-             players = new ArrayList<>();
+            // Assign the IDs to players
+            ArrayList<PlayerInformation> players = new ArrayList<>();
             int lastId = 0;
             for (AID a : playerAgents) {
                 players.add(new PlayerInformation(a, lastId++));
             }
 
-            //Initialize (inform ID)
+            // Initialize (inform ID)
             for (PlayerInformation player : players) {
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-                msg.setContent("Id#" + player.id + "#" + parameters.N + "," + parameters.R + "," + parameters.F );
+                msg.setContent("Id#" + player.id + "#" + parameters.N + "," + parameters.R + "," + parameters.F);
                 msg.addReceiver(player.aid);
                 send(msg);
             }
-            //Organize the matches
-            for (int round = 0; round < parameters.R; round++){
+
+            // Organize the matches and process rounds
+            for (int currentRound = 1; currentRound < parameters.R; currentRound++) {
+                // Play all matches
                 for (int i = 0; i < players.size(); i++) {
-                    for (int j = i + 1; j < players.size(); j++) { //too lazy to think, let's see if it works or it breaks
+                    for (int j = i + 1; j < players.size(); j++) {
                         playGame(players.get(i), players.get(j));
                     }
                 }
+
+                // Log the results after the matches
+                gui.logLine("Results are: ");
+                for (int i = 0; i < players.size(); i++) {
+                    Object[] row = gui.getRow(i);
+                    gui.logLine(row[0] + " payoff: " + row[1] + " stocks: " + row[5]);
+                }
+
+                // Process each player's decision and update the results
+                for (int i = 0; i < players.size(); i++) {
+                    PlayerInformation player = players.get(i);
+
+                    // Handle round end and get the decision
+                    roundOver(player);
+                    ACLMessage decision = blockingReceive();
+                    processSharesOperation(decision, player);
+
+                    // Update the table with new results
+                    gui.updateTable(players);
+                }
+
+                // Optionally, you can add a game over condition or message here
             }
 
+            // Game over phase
+            gameOver(players);
+            gui.updateTable(players);
         }
 
-        private void playGame(PlayerInformation player1, PlayerInformation player2) {
-            // Assuming player1.id < player2.id
-            gui.logLine("Starting new game between Player " + player1.id + " and Player " + player2.id);
+        private void gameOver(List<PlayerInformation> players) {
+            players.forEach(player -> {
+                player.sellShares(player.Shares, sharesPrice, parameters.F);
+                String msgContent = String.format("GameOver#%d#%f", player.id, player.currentReward);
 
-            // Inform players about the new game
+                gui.logLine(msgContent);
+
+                ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+                msg.addReceiver(player.aid);
+                msg.setContent(msgContent);
+                send(msg);
+            });
+        }
+
+        private void processSharesOperation(ACLMessage decisionMessage, PlayerInformation player) {
+            gui.logLine(String.format("Main Received decision %s from %s",
+                    decisionMessage.getContent(),
+                    decisionMessage.getSender().getName()));
+
+            String[] decisionSplit = decisionMessage.getContent().split("#");
+            double assetsToOperate = Double.parseDouble(decisionSplit[1]);
+            String decision = decisionSplit[0];
+
+            gui.logLine(decisionSplit[1] + " this was decision 222");
+
+            switch (decision) {
+                case "Buy":
+                    player.buyShares(assetsToOperate, sharesPrice);
+                    break;
+                case "Sell":
+                    player.sellShares(assetsToOperate, sharesPrice, parameters.F);
+                    break;
+                default:
+                    gui.logLine("Invalid decision received: " + decision);
+                    break;
+            }
+
+            sendAccounting(player);
+        }
+
+        public void sendAccounting(PlayerInformation player) {
+            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
+            msg.addReceiver(player.aid);
+            msg.setContent(String.format("Accounting#%d#%f#%d", player.id, player.currentReward, player.Shares));
+            send(msg);
+        }
+
+        public int[] getReward(String player1, String player2) {
+            // Define payoffs in a more readable manner using a map of player combinations
+            if ("C".equals(player1) && "C".equals(player2)) {
+                return new int[]{2, 2}; // C vs C -> 2, 2
+            } else if ("C".equals(player1) && "D".equals(player2)) {
+                return new int[]{0, 4}; // C vs D -> 0, 4
+            } else if ("D".equals(player1) && "C".equals(player2)) {
+                return new int[]{4, 0}; // D vs C -> 4, 0
+            } else if ("D".equals(player1) && "D".equals(player2)) {
+                return new int[]{0, 0}; // D vs D -> 0, 0
+            }
+
+            // If no valid combination, throw an exception
+            throw new IllegalArgumentException("Invalid input: Only 'C' or 'D' allowed for each player.");
+        }
+
+
+        private void playGame(PlayerInformation player1, PlayerInformation player2) {
+            // Send new game message to both players
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.addReceiver(player1.aid);
             msg.addReceiver(player2.aid);
             msg.setContent("NewGame#" + player1.id + "," + player2.id);
             send(msg);
 
+            // Wait for and process actions from both players
             String pos1, pos2;
 
-            // Request move from Player 1
+            // Player 1 action
             msg = new ACLMessage(ACLMessage.REQUEST);
             msg.setContent("Action");
             msg.addReceiver(player1.aid);
             send(msg);
-
             gui.logLine("Main Waiting for movement");
             ACLMessage move1 = blockingReceive();
             gui.logLine("Main Received " + move1.getContent() + " from " + move1.getSender().getName());
             pos1 = move1.getContent().split("#")[1];
 
-            // Request move from Player 2
+            // Player 2 action
             msg = new ACLMessage(ACLMessage.REQUEST);
-            msg.setContent("Position");
+            msg.setContent("Action");
             msg.addReceiver(player2.aid);
             send(msg);
-
             gui.logLine("Main Waiting for movement");
             ACLMessage move2 = blockingReceive();
             gui.logLine("Main Received " + move2.getContent() + " from " + move2.getSender().getName());
             pos2 = move2.getContent().split("#")[1];
 
+            // Calculate payoff based on positions
+            int[] payoff = getReward(pos1, pos2);
 
-            // Calculate results
-            int payoff1, payoff2;
-            if (Objects.equals(pos1, "C") && Objects.equals(pos2, "C")) { // Both cooperate
-                payoff1 = 2; payoff2 = 2;
-            } else if (Objects.equals(pos1, "C") && Objects.equals(pos2, "D")) { // Player 1 cooperates, Player 2 defects
-                payoff1 = 0; payoff2 = 4;
-            } else if (Objects.equals(pos1, "D") && Objects.equals(pos2, "C")) { // Player 1 defects, Player 2 cooperates
-                payoff1 = 4; payoff2 = 0;
-            } else { // Both defect
-                payoff1 = 0; payoff2 = 0;
-            }
-
-            gui.logLine("Game Results: Player " + player1.id + " = " + payoff1 + ", Player " + player2.id + " = " + payoff2);
-
-            // Update players' scores
-            player1.addScore(payoff1);
-            player2.addScore(payoff2);
-
-            // Send results to players
+            // Send results to both players
             msg = new ACLMessage(ACLMessage.INFORM);
             msg.addReceiver(player1.aid);
             msg.addReceiver(player2.aid);
-            result = "Results#"+player1.id+","+player2.id+"#"+pos1+","+pos2+"#"+payoff1+","+payoff2;
+            String result = String.format("Results#%d,%d#%s,%s#%d,%d", player1.id, player2.id, pos1, pos2, payoff[0], payoff[1]);
             msg.setContent(result);
             gui.logLine(result);
             send(msg);
 
             // End the game
-            msg = new ACLMessage(ACLMessage.INFORM);
-            msg.addReceiver(player1.aid);
-            msg.addReceiver(player2.aid);
             msg.setContent("EndGame");
             send(msg);
 
-            gui.logLine("Game ended between Player " + player1.id + " and Player " + player2.id);
-
-            // Optionally, log the cumulative scores after each game
-            gui.logLine("Cumulative Scores: Player " + player1.id + " = " + player1.score + ", Player " + player2.id + " = " + player2.score);
+            // Update the GUI and player payoffs
+            gui.updateRow(player1.id, player1.aid.getName(), payoff[0], pos1, "0");
+            gui.updateRow(player2.id, player2.aid.getName(), payoff[1], pos2, "1");
+            player1.addToRoundReward(payoff[0]);
+            player2.addToRoundReward(payoff[1]);
         }
+
+        private void roundOver(PlayerInformation player) {
+            player.finishRound(parameters.inflationRate);
+
+            String roundOverMessage = String.format("RoundOver#%d#%f#%f#%f#%d#%f",
+                    player.id,
+                    player.roundReward,
+                    player.currentReward,
+                    parameters.inflationRate,
+                    player.Shares,
+                    sharesPrice);
+
+            gui.logLine(roundOverMessage + " round is over");
+
+            ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
+            msg.addReceiver(player.aid);
+            msg.setContent(roundOverMessage);
+            send(msg);
+        }
+
 
         @Override
         public boolean done() {
@@ -211,26 +303,23 @@ public class MainAgent extends Agent {
 
     }
 
-    public void resetPlayers() {
-        // Logic to reset player statistics here (example)
-        for (PlayerInformation player : players) {
-            player.resetStats();  // Assuming you have a resetStats() method for players
-        }
-    }
-
-    public class PlayerInformation {
+    public static class PlayerInformation {
 
         AID aid;
         int id;
         int score;
+        int roundReward, decisionC, decisionD;
+        double Shares, currentReward;
 
         public PlayerInformation(AID a, int i) {
             aid = a;
             id = i;
-            this.score = 0;
+            roundReward = 0;
         }
-        public void addScore(int points) {
-            this.score += points;  // Update score by adding points
+
+        // Truncates a double value to 2 decimal places
+        public double truncate(double value) {
+            return Double.parseDouble(String.format("%.2f", value));
         }
 
         @Override
@@ -238,23 +327,47 @@ public class MainAgent extends Agent {
             return aid.equals(o);
         }
 
-        public void resetStats() {
-            this.score = 0;
+        // Adds the payoff amount to the current round's payoff
+        public void addToRoundReward(int payoffAmount) {
+            roundReward += payoffAmount;
+        }
+
+        // Ends the round, applies inflation, and resets the round payoff
+        public void finishRound(double inflationRate) {
+            currentReward = truncate((currentReward + roundReward) * (1 - inflationRate));
+            roundReward = 0;  // Reset the round payoff
+        }
+
+        // Buys stocks, ensuring the player has enough funds (payoff)
+        public void buyShares(double amountToBuy, double stockPrice) {
+            if (amountToBuy <= currentReward) {
+                currentReward = truncate(currentReward - amountToBuy);
+                Shares = truncate(Shares + (amountToBuy / stockPrice));
+            }
+        }
+
+        // Sells stocks, ensuring the player has enough stocks
+        public void sellShares(double amountToSell, double stockPrice, double feeRate) {
+            if (amountToSell <= Shares) {
+                Shares = truncate(Shares - amountToSell);
+                currentReward = truncate(currentReward + (amountToSell * stockPrice * (1 - feeRate)));
+            }
+        }
+
+
+        public static class GameParametersStruct {
+
+            int N;
+            int R;
+            double F, inflationRate;
+
+            public GameParametersStruct() {
+                N = 2;
+                R = 50;
+                F = 0.1;
+                inflationRate = 0.1;
+
+            }
         }
     }
-
-    public class GameParametersStruct {
-
-        int N;
-        int R;
-        double F;
-
-        public GameParametersStruct() {
-            N = 2;
-            R = 50;
-            F = 0.01;
-
-        }
-    }
-
 }
