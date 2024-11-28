@@ -14,7 +14,6 @@ import java.util.List;
 
 public class MainAgent extends Agent {
 
-
     private GUI gui;
     private AID[] playerAgents;
     private PlayerInformation.GameParametersStruct parameters = new PlayerInformation.GameParametersStruct();
@@ -93,10 +92,50 @@ public class MainAgent extends Agent {
      */
     private class GameManager extends SimpleBehaviour {
 
+        private boolean stopGame = false;  // A flag to stop the game
+        private boolean paused = false;    // A flag to pause the game
 
+        // Method to stop the game
+        public void stopGame() {
+            stopGame = true;
+            gui.logLine("Game is stopping.");
+            // You can add additional logic here, such as sending a stop message to players or performing clean-up tasks
+        }
 
+        // Method to pause the game
+        public void pauseGame() {
+            paused = true;
+            gui.logLine("Game is paused.");
+        }
+
+        // Method to continue the game
+        public void continueGame() {
+            if (paused) {
+                paused = false;
+                gui.logLine("Game is resuming.");
+            } else {
+                gui.logLine("Game is already running.");
+            }
+        }
+
+        // Modified action method to check for pause/stop/continue condition
         @Override
         public void action() {
+            if (stopGame) {
+                gui.logLine("Game has been stopped.");
+                return; // Exit the action method and stop further processing
+            }
+
+            // Check if the game is paused
+            while (paused) {
+                gui.logLine("Game is paused. Waiting to resume...");
+                try {
+                    Thread.sleep(1000); // Check every second
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+
             // Assign the IDs to players
             ArrayList<PlayerInformation> players = new ArrayList<>();
             int lastId = 0;
@@ -113,7 +152,23 @@ public class MainAgent extends Agent {
             }
 
             // Organize the matches and process rounds
-            for (int currentRound = 1; currentRound < parameters.R; currentRound++) {
+            for (int currentRound = 1; currentRound <= parameters.R; currentRound++) {
+                // Check if the game should stop before proceeding with the current round
+                if (stopGame) {
+                    gui.logLine("Game has been stopped before round " + currentRound);
+                    break; // Stop further rounds
+                }
+
+                // Check if the game is paused before starting this round
+                while (paused) {
+                    gui.logLine("Game is paused. Waiting to resume...");
+                    try {
+                        Thread.sleep(1000); // Adjust the sleep duration as needed
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+
                 // Play all matches
                 for (int i = 0; i < players.size(); i++) {
                     for (int j = i + 1; j < players.size(); j++) {
@@ -140,14 +195,16 @@ public class MainAgent extends Agent {
                     // Update the table with new results
                     gui.updateTable(players);
                 }
-
-                // Optionally, you can add a game over condition or message here
             }
 
             // Game over phase
-            gameOver(players);
+            if (!stopGame) {  // Only proceed with game over if the game was not stopped early
+                gameOver(players);
+            }
             gui.updateTable(players);
         }
+
+
 
         private void gameOver(List<PlayerInformation> players) {
             players.forEach(player -> {
@@ -192,7 +249,7 @@ public class MainAgent extends Agent {
         public void sendAccounting(PlayerInformation player) {
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
             msg.addReceiver(player.aid);
-            msg.setContent(String.format("Accounting#%d#%f#%d", player.id, player.currentReward, player.Shares));
+            msg.setContent(String.format("Accounting#%d#%.2f#%.2f", player.id, player.currentReward, player.Shares));
             send(msg);
         }
 
@@ -270,13 +327,16 @@ public class MainAgent extends Agent {
         private void roundOver(PlayerInformation player) {
             player.finishRound(parameters.inflationRate);
 
-            String roundOverMessage = String.format("RoundOver#%d#%f#%f#%f#%d#%f",
+            String roundOverMessage = String.format("RoundOver#%d#%f#%f#%f#%f#%f",
                     player.id,
-                    player.roundReward,
-                    player.currentReward,
-                    parameters.inflationRate,
-                    player.Shares,
-                    sharesPrice);
+                    (double) player.roundReward,        // Cast to double if it's an Integer
+                    (double) player.currentReward,      // Cast to double if it's an Integer
+                    (double) parameters.inflationRate,  // Cast to double if it's an Integer
+                    (double) player.Shares,             // Cast to double if it's an Integer
+                    (double) sharesPrice);              // Cast to double if it's an Integer
+
+
+
 
             gui.logLine(roundOverMessage + " round is over");
 
@@ -363,7 +423,7 @@ public class MainAgent extends Agent {
 
             public GameParametersStruct() {
                 N = 2;
-                R = 50;
+                R = 1000;
                 F = 0.1;
                 inflationRate = 0.1;
 

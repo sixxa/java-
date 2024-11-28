@@ -91,6 +91,8 @@ public final class GUI extends JFrame implements ActionListener {
         return pane;
     }
 
+
+
     private JPanel createLeftPanel() {
         JPanel leftPanel = new JPanel();
         leftPanel.setLayout(new GridBagLayout());
@@ -185,30 +187,20 @@ public final class GUI extends JFrame implements ActionListener {
     private JPanel createCentralBottomSubpanel() {
         JPanel centralBottomSubpanel = new JPanel(new GridBagLayout());
 
-
         String[] columnNames = {"Player", "Reward", "Defects", "Cooperates", "totalSum", "Shares"};
 
-        Object[] nullPointerWorkAround = {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"};
-
         Object[][] data = {
-                {"Player", "payoff", "stocks", "stock value", "cooperate", "defections", "score", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"},
-                {"*", "*", "*", "*", "*", "*", "*", "*", "*", "*"}
+                // Add your data here, for example:
+
         };
 
+
+        tModel = new DefaultTableModel(data, columnNames);
+        JTable payoffTable = new JTable(tModel);
+
         JLabel payoffLabel = new JLabel("Player Results");
-        JTable payoffTable = new JTable(data, nullPointerWorkAround);
-        payoffTable.setTableHeader(null);
         payoffTable.setEnabled(false);
-        
+
         JScrollPane player1ScrollPane = new JScrollPane(payoffTable);
 
         GridBagConstraints gc = new GridBagConstraints();
@@ -227,6 +219,7 @@ public final class GUI extends JFrame implements ActionListener {
 
         return centralBottomSubpanel;
     }
+
 
     public void addRow(String player, String Reward, String defects, String cooperates, String totalSum, String Shares) {
         tModel.addRow(new Object[]{player, Reward, defects, cooperates, totalSum, Shares});
@@ -258,23 +251,61 @@ public final class GUI extends JFrame implements ActionListener {
     }
 
     public void updateRow(int rowIndex, String player, double payoff, String move, String total) {
-
         Object[] row = getRow(rowIndex);
 
-        double new_payoff = Double.parseDouble(row[1].toString()) + payoff;
+        // Initialize new_payoff to 0
+        double new_payoff = 0;
+        String payoffStr = row[1].toString();
+
+        // Check if the payoff value is a valid number (either integer or decimal)
+        if (payoffStr.matches("-?\\d+(\\.\\d+)?")) {
+            new_payoff = Double.parseDouble(payoffStr) + payoff;
+        } else {
+            System.out.println("Invalid input: " + payoffStr);
+            // Handle invalid input case by setting a default value
+            new_payoff = payoff;  // Use the new payoff value if the old one is invalid
+        }
 
         logLine(String.valueOf(new_payoff));
         tModel.setValueAt(player, rowIndex, 0);
         tModel.setValueAt(new_payoff, rowIndex, 1);
+
+        // Handle row[2] (move "D") and row[3] (move not "D")
+        String value2 = row[2].toString();
+        String value3 = row[3].toString();
+
         if (move.equals("D")) {
-            tModel.setValueAt(Integer.parseInt(row[2].toString()) + 1, rowIndex, 2);
-        }else{
-            tModel.setValueAt(Integer.parseInt(row[3].toString())+1, rowIndex, 3);
+            if (isValidInteger(value2)) {
+                tModel.setValueAt(Integer.parseInt(value2) + 1, rowIndex, 2);
+            } else {
+                // Handle invalid integer value for row[2]
+                tModel.setValueAt(1, rowIndex, 2); // Default value (you can change it)
+                System.out.println("Invalid value for row[2]: " + value2);
+            }
+        } else {
+            if (isValidInteger(value3)) {
+                tModel.setValueAt(Integer.parseInt(value3) + 1, rowIndex, 3);
+            } else {
+                // Handle invalid integer value for row[3]
+                tModel.setValueAt(1, rowIndex, 3); // Default value (you can change it)
+                System.out.println("Invalid value for row[3]: " + value3);
+            }
         }
 
-
+        // Update the total value
         tModel.setValueAt(total, rowIndex, 4);
     }
+
+    // Utility method to check if a string can be parsed as an integer
+    private boolean isValidInteger(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
 
     public void updateStockAndPayoff(int rowIndex, String Shares,String Reward){
         tModel.setValueAt(Reward, rowIndex, 1);

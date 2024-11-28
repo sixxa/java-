@@ -6,9 +6,24 @@
   <component name="ChangeListManager">
     <list default="true" id="b4ef824e-7eb1-4ea3-983a-4471a3f19bf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/APDescription.txt" beforeDir="false" afterPath="$PROJECT_DIR$/APDescription.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/GUI.java" beforeDir="false" afterPath="$PROJECT_DIR$/GUI.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MTPs-Main-Container.txt" beforeDir="false" afterPath="$PROJECT_DIR$/MTPs-Main-Container.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/MainAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainAgent.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/RandomAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/RandomAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/APDescription.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/APDescription.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/GUI$LoggingOutputStream.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/GUI$LoggingOutputStream.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/GUI.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/GUI.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MTPs-Main-Container.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MTPs-Main-Container.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$GameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$GameManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$GameParametersStruct.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$PlayerInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$PlayerInformation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$Play.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$Play.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$State.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$State.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +124,9 @@
       <updated>1731858280315</updated>
       <workItem from="1731858283240" duration="10146000" />
       <workItem from="1732132082041" duration="205000" />
-      <workItem from="1732752158347" duration="6490000" />
+      <workItem from="1732752158347" duration="6547000" />
+      <workItem from="1732758820256" duration="352000" />
+      <workItem from="1732798998029" duration="3586000" />
     </task>
     <servers />
   </component>
