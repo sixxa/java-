@@ -1,9 +1,9 @@
-package com.sixa.virtualguide.dto;
+package com.sixa.virtualguide.model;
 
 import lombok.Data;
 
 @Data
-public class LoginRequest {
+public class LoginRequestModel {
 
     private String email;
     private String password;

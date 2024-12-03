@@ -1,7 +1,7 @@
 package com.sixa.virtualguide.controller;
 
 import com.sixa.virtualguide.Service.AccountService;
-import com.sixa.virtualguide.dto.LoginRequest;
+import com.sixa.virtualguide.model.LoginRequestModel;
 import com.sixa.virtualguide.model.Account;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +37,7 @@ public class LogRegController {
     }
 
     @PostMapping("/log")
-    public ResponseEntity<?> loginUser(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> loginUser(@RequestBody LoginRequestModel loginRequest) {
         try {
             Account account = accountService.findByEmail(loginRequest.getEmail());
             if (account == null) {

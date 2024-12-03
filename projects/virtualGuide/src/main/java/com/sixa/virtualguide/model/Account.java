@@ -19,4 +19,11 @@ public class Account {
 
     @Enumerated(EnumType.STRING)
     private Role role; // Enum: USER, GUIDE, ADMIN (if applicable)
+
+    // One-to-one relationship with User/Guide
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    private User user;
+
+    @OneToOne(mappedBy = "account", cascade = CascadeType.ALL)
+    private Guide guide;
 }

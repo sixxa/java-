@@ -42,14 +42,14 @@ public class AccountService {
             user.setEmail(account.getEmail());
             user.setPassword(account.getPassword());  // Assume password is already hashed
             user.setRole(account.getRole());
-            // Set any other user-specific properties
+            user.setAccount(savedAccount);  // Set the account reference for User
             userRepo.save(user);
         } else if (account.getRole() == Role.GUIDE) {
             Guide guide = new Guide();
             guide.setEmail(account.getEmail());
             guide.setPassword(account.getPassword());  // Assume password is already hashed
             guide.setRole(account.getRole());
-            // Set any other guide-specific properties
+            guide.setAccount(savedAccount);  // Set the account reference for Guide
             guideRepo.save(guide);
         }
 

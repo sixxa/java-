@@ -27,6 +27,9 @@ public class Guide {
     private Location location;
     //private xxx rating;
 
-
+    // Add a reference to Account as the owning side
+    @OneToOne
+    @JoinColumn(name = "account_id")  // foreign key to Account
+    private Account account;
 
 }
