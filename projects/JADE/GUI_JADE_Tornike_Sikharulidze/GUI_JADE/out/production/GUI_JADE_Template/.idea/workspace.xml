@@ -44,6 +44,7 @@
       <change beforePath="$PROJECT_DIR$/../../GUI_JADE_Template/__MACOSX/GUI_JADE_Template/._.DS_Store" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../GUI_JADE_Template/__MACOSX/GUI_JADE_Template/._RandomAgent.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../GUI_JADE_Template/__MACOSX/GUI_JADE_Template/._readme.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../JADE-bin-4.5.0/jade/License" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../JADE-bin-4.5.0/jade/README" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/../../JADE-bin-4.5.0/jade/lib/jade.jar" beforeDir="false" />
@@ -86,7 +87,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/java-/projects/JADE/GUI_JADE_Tornike_Sikharulidze/GUI_JADE&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/java-/projects/springBootApi1&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -153,6 +154,8 @@
       <workItem from="1732758820256" duration="352000" />
       <workItem from="1732798998029" duration="3586000" />
       <workItem from="1732838623925" duration="44000" />
+      <workItem from="1732838895499" duration="794000" />
+      <workItem from="1733153100658" duration="162000" />
     </task>
     <servers />
   </component>
