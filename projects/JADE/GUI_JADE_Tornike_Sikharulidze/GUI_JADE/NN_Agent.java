@@ -9,7 +9,7 @@ import jade.lang.acl.ACLMessage;
 
 import java.util.Random;
 
-public class NN_Agent extends Agent{
+public class NN_Agent extends Agent {
 
     private State state;
     private AID mainAgent;
@@ -64,10 +64,25 @@ public class NN_Agent extends Agent{
         }
     }
 
+    private void parseSetupMessage(ACLMessage msg) {
+        String[] parts = msg.getContent().split("#");
+        myId = Integer.parseInt(parts[1]);
+        String[] params = parts[2].split(",");
+        N = Integer.parseInt(params[0]);
+        R = Integer.parseInt(params[1]);
+        F = Double.parseDouble(params[2]);
+        mainAgent = msg.getSender();
+    }
+
+    private void parseNewGameMessage(String content) {
+        String[] parts = content.split("#")[1].split(",");
+        opponentId = myId == Integer.parseInt(parts[0]) ? Integer.parseInt(parts[1]) : Integer.parseInt(parts[0]);
+    }
+
     private class Play extends CyclicBehaviour {
         @Override
         public void action() {
-            System.out.println(getAID().getName() + ":" + state.name());
+            System.out.println(getAID().getName() + " - Current State: " + state.name());
             msg = blockingReceive();
 
             if (msg != null) {
@@ -91,48 +106,40 @@ public class NN_Agent extends Agent{
                             String action = chooseAction();
                             sendAction(action);
                             state = State.s3AwaitingResult;
-                        }
-                        break;
-
-                    case s3AwaitingResult:
-                        if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("Results#")) {
-                            trainSOM(msg.getContent());
+                        } else if (msg.getContent().startsWith("RoundOver")) {
+                            processRoundOver(msg);
                             state = State.s2Round;
                         }
                         break;
 
+                    case s3AwaitingResult:
+                        if (msg.getPerformative() == ACLMessage.INFORM) {
+                            if (msg.getContent().startsWith("Results#")) {
+                                trainSOM(msg.getContent());
+                                state = State.s2Round;
+                            } else if (msg.getContent().startsWith("RoundOver")) {
+                                processRoundOver(msg);
+                                state = State.s2Round;
+                            } else if (msg.getContent().startsWith("EndGame")) {
+                                System.out.println(getAID().getName() + " - EndGame received. Returning to AwaitingGame.");
+                                state = State.s1AwaitingGame;
+                            }
+                        }
+                        break;
+
                     default:
+                        System.out.println(getAID().getName() + " - Unknown state.");
                         break;
                 }
             }
         }
 
-        private void parseSetupMessage(ACLMessage msg) {
-            String[] parts = msg.getContent().split("#");
-            myId = Integer.parseInt(parts[1]);
-            String[] params = parts[2].split(",");
-            N = Integer.parseInt(params[0]);
-            R = Integer.parseInt(params[1]);
-            F = Double.parseDouble(params[2]);
-            mainAgent = msg.getSender();
-        }
-
-        private void parseNewGameMessage(String content) {
-            String[] parts = content.split("#")[1].split(",");
-            opponentId = myId == Integer.parseInt(parts[0]) ? Integer.parseInt(parts[1]) : Integer.parseInt(parts[0]);
-        }
-
         private String chooseAction() {
-            // Input vector for SOM (e.g., last reward, opponent behavior)
             double[] inputVector = lastInputVector != null ? lastInputVector : new double[]{0.0, 0.0};
-
-            // Use SOM to determine action
             String bmu = som.sGetBMU(inputVector, false);
             int x = Integer.parseInt(bmu.split(",")[0]);
             int y = Integer.parseInt(bmu.split(",")[1]);
-
-            // Decide action based on SOM output
-            return (x + y) % 2 == 0 ? "C" : "D"; // Example: Map even/odd to "C"/"D"
+            return (x + y) % 2 == 0 ? "C" : "D";
         }
 
         private void sendAction(String action) {
@@ -140,28 +147,42 @@ public class NN_Agent extends Agent{
             response.addReceiver(mainAgent);
             response.setContent("Action#" + action);
             send(response);
-            System.out.println(getAID().getName() + " sent " + response.getContent());
+            System.out.println(getAID().getName() + " sent action: " + action);
         }
 
         private void trainSOM(String results) {
             String[] parts = results.split("#");
-            // parts[0]: "Results"
-            // parts[1]: "0,1" (player IDs)
-            // parts[2]: "C,D" (actions)
-            // parts[3]: "2,3" (rewards)
-
-            // Parse rewards only
             String[] rewards = parts[3].split(",");
             double myReward = Double.parseDouble(rewards[0]);
             double opponentReward = Double.parseDouble(rewards[1]);
-
-            // Input vector for training
             double[] inputVector = {myReward, opponentReward};
-            som.sGetBMU(inputVector, true); // Train SOM with current results
-
-            // Update last input for the next round
+            som.sGetBMU(inputVector, true);
             lastInputVector = inputVector;
+            System.out.println(getAID().getName() + " - SOM trained with rewards: " + myReward + ", " + opponentReward);
         }
 
+        private void processRoundOver(ACLMessage msg) {
+            System.out.println(getAID().getName() + " - RoundOver received: " + msg.getContent());
+            ACLMessage response = new ACLMessage(ACLMessage.INFORM);
+            response.addReceiver(mainAgent);
+            response.setContent("Sell#0.0");
+            send(response);
+        }
+    }
+
+    private static class SOM {
+        private final int gridSize;
+        private final int inputSize;
+
+        public SOM(int gridSize, int inputSize) {
+            this.gridSize = gridSize;
+            this.inputSize = inputSize;
+        }
+
+        public String sGetBMU(double[] input, boolean train) {
+            int x = (int) (Math.random() * gridSize);
+            int y = (int) (Math.random() * gridSize);
+            return x + "," + y;
+        }
     }
 }

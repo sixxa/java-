@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-public class RL_Agent extends Agent{
+public class RL_Agent extends Agent {
 
     private State state;
     private AID mainAgent;
@@ -100,6 +100,8 @@ public class RL_Agent extends Agent{
                         if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("Results#")) {
                             updateQTable(msg.getContent());
                             state = State.s2Round;
+                        } else if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("EndGame")) {
+                            state = State.s1AwaitingGame;
                         }
                         break;
 
@@ -147,22 +149,14 @@ public class RL_Agent extends Agent{
 
         private void updateQTable(String results) {
             String[] parts = results.split("#");
-            // parts[0]: "Results"
-            // parts[1]: "0,1" (player IDs)
-            // parts[2]: "C,D" (actions)
-            // parts[3]: "2,3" (rewards)
-
-            // Parse rewards only
             String[] rewards = parts[3].split(",");
             int reward = Integer.parseInt(rewards[0]); // Reward for this agent
 
-            // Update Q-table
             double oldQValue = qTable.getOrDefault(lastAction, 0.0);
             double maxNextQValue = Math.max(qTable.getOrDefault("C", 0.0), qTable.getOrDefault("D", 0.0));
             double newQValue = oldQValue + learningRate * (reward + discountFactor * maxNextQValue - oldQValue);
 
             qTable.put(lastAction, newQValue);
         }
-
     }
 }

@@ -5,12 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="b4ef824e-7eb1-4ea3-983a-4471a3f19bf7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/NN_Agent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SOM.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/APDescription.txt" beforeDir="false" afterPath="$PROJECT_DIR$/APDescription.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/APDescription.txt" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/APDescription.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NN_Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/NN_Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RL_Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/RL_Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$Play.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$Play.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$Play.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$Play.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
