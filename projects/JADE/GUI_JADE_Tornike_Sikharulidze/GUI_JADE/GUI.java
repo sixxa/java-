@@ -356,22 +356,34 @@ public final class GUI extends JFrame implements ActionListener {
 
 
     public static void updateTable(ArrayList<MainAgent.PlayerInformation> players) {
+        System.out.println("Updating table...");
         for (int i = 0; i < tModel.getRowCount(); i++) {
             MainAgent.PlayerInformation player = null;
+
+            // Find the matching player
             for (MainAgent.PlayerInformation p : players) {
                 if (tModel.getValueAt(i, 0).equals(p.aid.getName())) {
                     player = p;
                     break;
                 }
             }
-            if (player == null) continue;
-            tModel.setValueAt(player.currentReward, i, 1);
-            tModel.setValueAt(player.decisionD, i, 2);
-            tModel.setValueAt(player.decisionC, i, 3);
-            tModel.setValueAt(player.currentReward,i,4);
-            tModel.setValueAt(player.Shares, i, 5);
+
+            if (player != null) {
+                System.out.println("Updating player: " + player.aid.getName());
+                tModel.setValueAt(player.currentReward, i, 1); // Reward
+                tModel.setValueAt(player.decisionD, i, 2);     // Defects
+                tModel.setValueAt(player.decisionC, i, 3);     // Cooperates
+                tModel.setValueAt(player.currentReward, i, 4); // Total Reward
+                tModel.setValueAt(player.Shares, i, 5);        // Shares
+            } else {
+                System.err.println("Player not found in table: " + tModel.getValueAt(i, 0));
+            }
         }
+        System.out.println("Table updated.");
     }
+
+
+
 
     // Utility method to check if a string can be parsed as an integer
     private boolean isValidInteger(String str) {
