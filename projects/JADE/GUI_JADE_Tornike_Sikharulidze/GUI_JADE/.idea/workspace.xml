@@ -6,12 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="b4ef824e-7eb1-4ea3-983a-4471a3f19bf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/NN_Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/NN_Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/RL_Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/RL_Agent.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$Play.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$Play.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$Play.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$Play.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +50,7 @@
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/java-/projects/springBootApi1&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Prvt_projects/virtualGuide&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -125,6 +119,7 @@
       <workItem from="1732838623925" duration="44000" />
       <workItem from="1732838895499" duration="794000" />
       <workItem from="1733153100658" duration="162000" />
+      <workItem from="1735666534700" duration="313000" />
     </task>
     <servers />
   </component>
