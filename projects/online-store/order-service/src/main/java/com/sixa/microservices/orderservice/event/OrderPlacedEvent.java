@@ -1,2 +1,13 @@
-package com.sixa.microservices.orderservice.event;public class OrderPlacedEvent {
+package com.sixa.microservices.orderservice.event;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class OrderPlacedEvent {
+    private String orderNumber;
+    private String email;
 }
