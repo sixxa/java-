@@ -6,6 +6,25 @@
   <component name="ChangeListManager">
     <list default="true" id="b4ef824e-7eb1-4ea3-983a-4471a3f19bf7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/MainAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/MainAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/NN_Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/NN_Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RL_Agent.java" beforeDir="false" afterPath="$PROJECT_DIR$/RL_Agent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/RandomAgent.java" beforeDir="false" afterPath="$PROJECT_DIR$/RandomAgent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$GameManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$GameManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$PlayerInformation$GameParametersStruct.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$PlayerInformation$GameParametersStruct.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$PlayerInformation.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent$PlayerInformation.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/MainAgent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$NeuralNetwork.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$NeuralNetwork.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$Play.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent$Play.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/NN_Agent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$Play.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$Play.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$QLearning.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent$QLearning.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RL_Agent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$Play.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent$Play.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/GUI_JADE_Template/RandomAgent.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -119,6 +138,7 @@
       <workItem from="1732838623925" duration="44000" />
       <workItem from="1732838895499" duration="794000" />
       <workItem from="1733153100658" duration="162000" />
+      <workItem from="1735666534700" duration="2639000" />
     </task>
     <servers />
   </component>

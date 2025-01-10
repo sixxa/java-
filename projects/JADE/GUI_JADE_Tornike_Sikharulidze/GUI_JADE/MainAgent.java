@@ -76,8 +76,9 @@ public class MainAgent extends Agent {
     public void pauseGame() throws InterruptedException {
         paused = true;
         gui.logLine("Game is paused.");
-        Thread.sleep(1000);
+        Thread.sleep(1000); // This line throws InterruptedException
     }
+
 
     public void continueGame() {
         if (paused) {
@@ -94,7 +95,6 @@ public class MainAgent extends Agent {
 
         @Override
         public void action() {
-            // Synchronize for pause functionality
             synchronized (this) {
                 while (paused) {
                     try {
@@ -105,14 +105,12 @@ public class MainAgent extends Agent {
                 }
             }
 
-            // Clear and initialize player list
             players.clear();
             int lastId = 0;
             for (AID a : playerAgents) {
                 players.add(new PlayerInformation(a, lastId++));
             }
 
-            // Assign IDs to players
             for (PlayerInformation player : players) {
                 ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
                 msg.setContent("Id#" + player.id + "#" + parameters.N + "," + parameters.R + "," + parameters.F);
@@ -120,30 +118,26 @@ public class MainAgent extends Agent {
                 send(msg);
             }
 
-            // Process each round
             for (int currentRound = 1; currentRound <= parameters.R; currentRound++) {
                 gui.leftPanelRoundsLabel.setText(currentRound + "/" + parameters.R);
                 parameters.inflationRate = getInflationRate(currentRound);
                 sharesPrice = getIndexValue(currentRound);
 
-                // Play all matches
                 for (int i = 0; i < players.size(); i++) {
                     for (int j = i + 1; j < players.size(); j++) {
                         playGame(players.get(i), players.get(j));
                     }
                 }
 
-                // Log results after matches
                 gui.logLine("Results are: ");
                 for (PlayerInformation player : players) {
                     Object[] row = gui.getRow(player.id);
                     gui.logLine(row[0] + " payoff: " + row[1] + " stocks: " + row[5]);
                 }
 
-                // Process decisions for each player
                 for (PlayerInformation player : players) {
                     roundOver(player);
-                    ACLMessage decision = blockingReceive(1000); // Timeout of 1 second
+                    ACLMessage decision = blockingReceive(1000);
                     if (decision == null) {
                         gui.logLine("No decision received from " + player.aid.getName());
                         continue;
@@ -151,15 +145,13 @@ public class MainAgent extends Agent {
                     processSharesOperation(decision, player);
                 }
 
-                // Update the GUI after every round
                 gui.updateTable(players);
             }
 
-            // End the game if not stopped
             if (!stopGame) {
                 gameOver(players);
             }
-            gui.updateTable(players); // Final update
+            gui.updateTable(players);
         }
 
         private void gameOver(ArrayList<PlayerInformation> players) {
@@ -183,14 +175,12 @@ public class MainAgent extends Agent {
                         decisionMessage.getSender().getName()));
 
                 String[] decisionSplit = decisionMessage.getContent().split("#");
-                String decision = decisionSplit[0]; // Get the move (e.g., "C" or "D")
+                String decision = decisionSplit[0];
 
                 if (decision.equals("Action")) {
-                    // Handle player moves (C or D)
                     String move = decisionSplit[1];
                     gui.logLine("Player made a move: " + move);
 
-                    // Update decision counts
                     if (move.equals("C")) {
                         player.decisionC++;
                     } else if (move.equals("D")) {
@@ -200,7 +190,6 @@ public class MainAgent extends Agent {
                     }
 
                 } else if (decision.equals("Buy") || decision.equals("Sell")) {
-                    // Handle stock operations
                     double assetsToOperate = Double.parseDouble(decisionSplit[1]);
 
                     synchronized (this) {
@@ -220,7 +209,6 @@ public class MainAgent extends Agent {
                     gui.logLine("Unexpected decision type: " + decision);
                 }
 
-                // Update the GUI table
                 sendAccounting(player);
                 gui.updateTable(players);
 
@@ -228,7 +216,6 @@ public class MainAgent extends Agent {
                 gui.logLine("Error processing shares operation: " + e.getMessage());
             }
         }
-
 
         public void sendAccounting(PlayerInformation player) {
             ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
@@ -246,64 +233,64 @@ public class MainAgent extends Agent {
         }
 
         private void playGame(PlayerInformation player1, PlayerInformation player2) {
-            ACLMessage msg = new ACLMessage(ACLMessage.INFORM);
-            msg.addReceiver(player1.aid);
-            msg.addReceiver(player2.aid);
-            msg.setContent("NewGame#" + player1.id + "," + player2.id);
-            send(msg);
+            ACLMessage newGameMsg = new ACLMessage(ACLMessage.INFORM);
+            newGameMsg.addReceiver(player1.aid);
+            newGameMsg.addReceiver(player2.aid);
+            newGameMsg.setContent("NewGame#" + player1.id + "," + player2.id);
+            send(newGameMsg);
 
-            msg = new ACLMessage(ACLMessage.REQUEST);
-            msg.setContent("Action");
-            msg.addReceiver(player1.aid);
-            send(msg);
-            ACLMessage move1 = blockingReceive();
+            ACLMessage actionRequest1 = new ACLMessage(ACLMessage.REQUEST);
+            actionRequest1.addReceiver(player1.aid);
+            actionRequest1.setContent("Action");
+            send(actionRequest1);
+
+            ACLMessage move1 = blockingReceive(5000);
+            if (move1 == null) {
+                gui.logLine("Player " + player1.id + " did not respond in time.");
+                return;
+            }
             String pos1 = move1.getContent().split("#")[1];
-            player1.incrementDecision(pos1); // Track player1's decision
+            player1.incrementDecision(pos1);
 
-            msg = new ACLMessage(ACLMessage.REQUEST);
-            msg.setContent("Action");
-            msg.addReceiver(player2.aid);
-            send(msg);
-            ACLMessage move2 = blockingReceive();
+            ACLMessage actionRequest2 = new ACLMessage(ACLMessage.REQUEST);
+            actionRequest2.addReceiver(player2.aid);
+            actionRequest2.setContent("Action");
+            send(actionRequest2);
+
+            ACLMessage move2 = blockingReceive(5000);
+            if (move2 == null) {
+                gui.logLine("Player " + player2.id + " did not respond in time.");
+                return;
+            }
             String pos2 = move2.getContent().split("#")[1];
-            player2.incrementDecision(pos2); // Track player2's decision
+            player2.incrementDecision(pos2);
 
             int[] payoff = getReward(pos1, pos2);
 
-            msg = new ACLMessage(ACLMessage.INFORM);
-            msg.addReceiver(player1.aid);
-            msg.addReceiver(player2.aid);
-            msg.setContent(String.format("Results#%d,%d#%s,%s#%d,%d",
+            ACLMessage resultsMsg = new ACLMessage(ACLMessage.INFORM);
+            resultsMsg.addReceiver(player1.aid);
+            resultsMsg.addReceiver(player2.aid);
+            resultsMsg.setContent(String.format("Results#%d,%d#%s,%s#%d,%d",
                     player1.id, player2.id, pos1, pos2, payoff[0], payoff[1]));
-            send(msg);
+            send(resultsMsg);
 
             player1.addToRoundReward(payoff[0]);
             player2.addToRoundReward(payoff[1]);
         }
 
-
         private void roundOver(PlayerInformation player) {
-            // Ensure roundReward is correctly processed
             player.finishRound(parameters.inflationRate);
-
-            // Format the roundOver message
             String roundOverMessage = String.format("RoundOver#%d#%.2f#%.2f#%.2f#%.2f#%.2f",
-                    player.id,
-                    (double) player.roundReward,       // Ensure roundReward is cast to double
-                    player.currentReward,              // Already double
-                    parameters.inflationRate,          // Already double
-                    player.Shares,                     // Already double
-                    sharesPrice);                      // Already double
+                    player.id, player.roundReward, player.currentReward,
+                    parameters.inflationRate, player.Shares, sharesPrice);
 
             gui.logLine(roundOverMessage + " round is over");
 
-            // Send the message to the player
             ACLMessage msg = new ACLMessage(ACLMessage.REQUEST);
             msg.addReceiver(player.aid);
             msg.setContent(roundOverMessage);
             send(msg);
         }
-
 
         public int[] getReward(String player1, String player2) {
             if ("C".equals(player1) && "C".equals(player2)) return new int[]{2, 2};
@@ -321,8 +308,8 @@ public class MainAgent extends Agent {
     public static class PlayerInformation {
         AID aid;
         int id;
-        int decisionD = 0; // Tracks "Defect" decisions
-        int decisionC = 0; // Tracks "Cooperate" decisions
+        int decisionD = 0;
+        int decisionC = 0;
         double Shares, currentReward, roundReward;
 
         public PlayerInformation(AID a, int i) {
@@ -369,5 +356,4 @@ public class MainAgent extends Agent {
             double inflationRate = 0.1;
         }
     }
-
 }

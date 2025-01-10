@@ -58,123 +58,164 @@ public class NN_Agent extends Agent {
 
         @Override
         public void action() {
-            System.out.println(getAID().getName() + ":" + state.name());
-            msg = blockingReceive();
+            System.out.println(getAID().getName() + " Current state: " + state.name());
 
-            if (msg != null) {
-                switch (state) {
-                    case s0NoConfig:
-                        if (msg.getContent().startsWith("Id#") && msg.getPerformative() == ACLMessage.INFORM) {
-                            try {
-                                if (validateSetupMessage(msg)) {
-                                    state = State.s1AwaitingGame;
-                                }
-                            } catch (NumberFormatException e) {
-                                System.out.println(getAID().getName() + ":" + state.name() + " - Bad message");
-                            }
-                        } else {
-                            System.out.println(getAID().getName() + ":" + state.name() + " - Unexpected message");
-                        }
-                        break;
+            // Use blockingReceive with a timeout to avoid indefinite blocking
+            msg = blockingReceive(5000); // Wait up to 5000ms for a message
 
-                    case s1AwaitingGame:
-                        if (msg.getPerformative() == ACLMessage.INFORM) {
-                            String content = msg.getContent();
-                            if (content.startsWith("Id#")) {
-                                try {
-                                    validateSetupMessage(msg);
-                                } catch (NumberFormatException e) {
-                                    System.out.println(getAID().getName() + ":" + state.name() + " - Bad message");
-                                }
-                            } else if (content.startsWith("NewGame#")) {
-                                try {
-                                    if (validateNewGame(content)) {
-                                        state = State.s2Round;
-                                    }
-                                } catch (NumberFormatException e) {
-                                    System.out.println(getAID().getName() + ":" + state.name() + " - Bad message");
-                                }
-                            } else if (content.startsWith("Accounting#")) {
-                                System.out.println(content);  // Handle accounting message
-                            }
-                        }
-                        break;
+            if (msg == null) {
+                System.out.println(getAID().getName() + " No message received, retrying...");
+                return; // Exit if no message is received
+            }
 
-                    case s2Round:
-                        if (msg.getPerformative() == ACLMessage.REQUEST) {
-                            ACLMessage response = new ACLMessage(ACLMessage.INFORM);
-                            response.addReceiver(mainAgent);
+            synchronized (this) {
+                try {
+                    switch (state) {
+                        case s0NoConfig:
+                            handleNoConfigState(msg);
+                            break;
 
-                            // Use Neural Network to decide the action
-                            double[] inputs = {myId, opponentId}; // Example input (can be adjusted based on game state)
-                            String action = moves_list[neuralNetwork.predict(inputs)];
-                            response.setContent("Action#" + action);
-                            System.out.println(getAID().getName() + " sent " + response.getContent());
-                            send(response);
-                            state = State.s3AwaitingResult;
-                        } else if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("EndGame")) {
-                            state = State.s1AwaitingGame;
-                        } else {
-                            System.out.println(getAID().getName() + ":" + state.name() + " - Unexpected message:" + msg.getContent());
-                        }
-                        break;
+                        case s1AwaitingGame:
+                            handleAwaitingGameState(msg);
+                            break;
 
-                    case s3AwaitingResult:
-                        if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("Results#")) {
-                            String[] parts = msg.getContent().split("#");
-                            String opponentAction = parts[2].split(",")[1];
-                            int reward = Integer.parseInt(parts[3].split(",")[0]);
+                        case s2Round:
+                            handleRoundState(msg);
+                            break;
 
-                            // Train the Neural Network based on the result
-                            double[] inputs = {myId, opponentId};
-                            neuralNetwork.train(inputs, moves_list, reward);
+                        case s3AwaitingResult:
+                            handleAwaitingResultState(msg);
+                            break;
 
-                            state = State.s2Round;
-                        } else {
-                            System.out.println(getAID().getName() + ":" + state.name() + " - Unexpected message");
-                        }
-                        break;
-
-                    default:
-                        System.out.println(getAID().getName() + ":" + state.name() + " - Unknown state");
-                        break;
+                        default:
+                            System.out.println(getAID().getName() + ": Unknown state encountered: " + state.name());
+                            break;
+                    }
+                } catch (Exception e) {
+                    System.err.println(getAID().getName() + " encountered an error: " + e.getMessage());
+                    e.printStackTrace();
                 }
             }
         }
 
+        private void handleNoConfigState(ACLMessage msg) {
+            if (msg.getContent().startsWith("Id#") && msg.getPerformative() == ACLMessage.INFORM) {
+                try {
+                    if (validateSetupMessage(msg)) {
+                        state = State.s1AwaitingGame;
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(getAID().getName() + ": Invalid setup message format.");
+                }
+            } else {
+                logUnexpectedMessage(msg);
+            }
+        }
+
+        private void handleAwaitingGameState(ACLMessage msg) {
+            if (msg.getPerformative() == ACLMessage.INFORM) {
+                String content = msg.getContent();
+                try {
+                    if (content.startsWith("Id#")) {
+                        validateSetupMessage(msg);
+                    } else if (content.startsWith("NewGame#") && validateNewGame(content)) {
+                        state = State.s2Round;
+                    } else if (content.startsWith("Accounting#")) {
+                        System.out.println(getAID().getName() + " Accounting message received: " + content);
+                    } else {
+                        logUnexpectedMessage(msg);
+                    }
+                } catch (NumberFormatException e) {
+                    System.out.println(getAID().getName() + ": Invalid message format in AwaitingGame state.");
+                }
+            } else {
+                logUnexpectedMessage(msg);
+            }
+        }
+
+        private void handleRoundState(ACLMessage msg) {
+            if (msg.getPerformative() == ACLMessage.REQUEST && msg.getContent().equals("Action")) {
+                ACLMessage response = new ACLMessage(ACLMessage.INFORM);
+                response.addReceiver(mainAgent);
+
+                // Use Neural Network to decide the action
+                double[] inputs = {myId, opponentId}; // Adjust based on the game state if needed
+                String action = moves_list[neuralNetwork.predict(inputs)];
+                response.setContent("Action#" + action);
+
+                System.out.println(getAID().getName() + " sent action: " + action);
+                send(response);
+                state = State.s3AwaitingResult;
+            } else if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("EndGame")) {
+                state = State.s1AwaitingGame;
+            } else {
+                logUnexpectedMessage(msg);
+            }
+        }
+
+        private void handleAwaitingResultState(ACLMessage msg) {
+            if (msg.getPerformative() == ACLMessage.INFORM && msg.getContent().startsWith("Results#")) {
+                try {
+                    String[] parts = msg.getContent().split("#");
+                    String opponentAction = parts[2].split(",")[1];
+                    int reward = Integer.parseInt(parts[3].split(",")[0]);
+
+                    // Train the Neural Network based on the result
+                    double[] inputs = {myId, opponentId};
+                    neuralNetwork.train(inputs, moves_list, reward);
+
+                    System.out.println(getAID().getName() + " trained NN with reward: " + reward);
+                    state = State.s2Round;
+                } catch (NumberFormatException e) {
+                    System.out.println(getAID().getName() + ": Invalid result message format.");
+                }
+            } else {
+                logUnexpectedMessage(msg);
+            }
+        }
+
+        private void logUnexpectedMessage(ACLMessage msg) {
+            System.out.println(getAID().getName() + ": Unexpected message received in state " + state.name() + ": " + msg.getContent());
+        }
+
         private boolean validateSetupMessage(ACLMessage msg) throws NumberFormatException {
-            int tN, tR, tMyId;
-            double tF;
             String msgContent = msg.getContent();
-
             String[] contentSplit = msgContent.split("#");
-            if (contentSplit.length != 3) return false;
-            if (!contentSplit[0].equals("Id")) return false;
-            tMyId = Integer.parseInt(contentSplit[1]);
 
+            if (contentSplit.length != 3 || !contentSplit[0].equals("Id")) {
+                return false;
+            }
+
+            myId = Integer.parseInt(contentSplit[1]);
             String[] parametersSplit = contentSplit[2].split(",");
-            if (parametersSplit.length != 3) return false;
-            tN = Integer.parseInt(parametersSplit[0]);
-            tR = Integer.parseInt(parametersSplit[1]);
-            tF = Double.parseDouble(parametersSplit[2]);
+
+            if (parametersSplit.length != 3) {
+                return false;
+            }
+
+            N = Integer.parseInt(parametersSplit[0]);
+            R = Integer.parseInt(parametersSplit[1]);
+            F = Double.parseDouble(parametersSplit[2]);
 
             mainAgent = msg.getSender();
-            N = tN;
-            R = tR;
-            F = tF;
-            myId = tMyId;
             return true;
         }
 
         public boolean validateNewGame(String msgContent) {
-            int msgId0, msgId1;
             String[] contentSplit = msgContent.split("#");
-            if (contentSplit.length != 2) return false;
-            if (!contentSplit[0].equals("NewGame")) return false;
+
+            if (contentSplit.length != 2 || !contentSplit[0].equals("NewGame")) {
+                return false;
+            }
+
             String[] idSplit = contentSplit[1].split(",");
-            if (idSplit.length != 2) return false;
-            msgId0 = Integer.parseInt(idSplit[0]);
-            msgId1 = Integer.parseInt(idSplit[1]);
+            if (idSplit.length != 2) {
+                return false;
+            }
+
+            int msgId0 = Integer.parseInt(idSplit[0]);
+            int msgId1 = Integer.parseInt(idSplit[1]);
+
             if (myId == msgId0) {
                 opponentId = msgId1;
                 return true;
@@ -182,9 +223,11 @@ public class NN_Agent extends Agent {
                 opponentId = msgId0;
                 return true;
             }
+
             return false;
         }
     }
+
 
     private class NeuralNetwork {
 
