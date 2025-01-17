@@ -1,4 +1,4 @@
-package com.sixa.microservices.orderservice.order.event;
+package com.sixa.microservices.orderservice.event;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

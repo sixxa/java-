@@ -1,7 +1,6 @@
-package com.sixa.microservices.service;
+package com.sixa.microservices.orderservice.service;
 
-
-import com.sixa.microservices.order.event.OrderPlacedEvent;
+import com.sixa.microservices.orderservice.event.OrderPlacedEvent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
@@ -19,26 +18,33 @@ public class NotificationService {
     private final JavaMailSender javaMailSender;
 
     @KafkaListener(topics = "order-placed")
-    public void listen(OrderPlacedEvent orderPlacedEvent){
+    public void listen(OrderPlacedEvent orderPlacedEvent) {
         log.info("Got Message from order-placed topic {}", orderPlacedEvent);
+
         MimeMessagePreparator messagePreparator = mimeMessage -> {
             MimeMessageHelper messageHelper = new MimeMessageHelper(mimeMessage);
             messageHelper.setFrom("springshop@email.com");
             messageHelper.setTo(orderPlacedEvent.getEmail());
-            messageHelper.setSubject(String.format("Your Order with OrderNumber %s is placed successfully", orderPlacedEvent.getOrderNumber()));
-            messageHelper.setText(String.format("""
-                            Hi %s,%s
+            messageHelper.setSubject(
+                    String.format("Your Order with OrderNumber %s is placed successfully",
+                            orderPlacedEvent.getOrderNumber()));
 
-                            Your order with order number %s is now placed successfully.
+            // Simplified email body without customerName
+            messageHelper.setText(
+                    String.format("""
+                    Hi,
 
-                            Best Regards
-                            Spring Shop
-                            """,
-                    orderPlacedEvent.getOrderNumber()));
+                    Your order with order number %s is now placed successfully.
+
+                    Best Regards,
+                    Spring Shop
+                    """,
+                            orderPlacedEvent.getOrderNumber()));
         };
+
         try {
             javaMailSender.send(messagePreparator);
-            log.info("Order Notifcation email sent!!");
+            log.info("Order Notification email sent!!");
         } catch (MailException e) {
             log.error("Exception occurred when sending mail", e);
             throw new RuntimeException("Exception occurred when sending mail to springshop@email.com", e);

@@ -1,3 +1,65 @@
+JADE Multi-Agent System for Game Simulation
 Author: Tornike Sikharulidze
 AIM ID: 22001807
 
+How the Agents Work in This Simulation
+This project is built on the concept of multi-agent systems, where multiple entities (agents) interact to simulate a dynamic game environment. Each agent has a distinct role and strategy, while the MainAgent orchestrates the overall flow. Here’s a detailed breakdown of how it all works:
+
+MainAgent: The Central Coordinator
+The MainAgent acts as the backbone of the system, ensuring that all components work together seamlessly. Its responsibilities include:
+
+Initialization: Prepares the game environment, including creating and initializing all agents.
+Coordination: Sends messages to agents at key points—such as starting a new game round—and collects their responses.
+Result Management: Evaluates the actions sent by agents, calculates scores, and communicates the results back to them.
+Orchestration: Maintains the overall flow of the game, ensuring there are no interruptions or miscommunications.
+In essence, the MainAgent ensures that the simulation runs smoothly and efficiently.
+
+NN_Agent: The Machine Learning Expert
+The NN_Agent (Neural Network Agent) leverages machine learning techniques to make decisions based on the current state of the game. Its key characteristics are:
+
+Decision-Making: Uses a trained neural network to analyze the game state and select the most advantageous action.
+Learning: Adapts its strategy over time by refining its neural network based on feedback from previous rounds.
+Strengths: Excels at recognizing patterns in game dynamics and making strategic decisions that are not immediately obvious.
+This agent represents a sophisticated, data-driven approach to decision-making.
+
+RL_Agent: The Adaptive Learner
+The RL_Agent (Reinforcement Learning Agent) learns and evolves by interacting with the environment. Its approach is guided by reinforcement learning principles:
+
+Exploration vs. Exploitation: Strikes a balance between trying new strategies (exploration) and using proven ones (exploitation).
+Feedback Loop: Adjusts its policy or decision-making framework based on the rewards or penalties received after each round.
+Flexibility: Continuously improves its performance by adapting to changes in the game environment.
+This agent is well-suited for dynamic scenarios where strategies need to evolve over time.
+
+RandomAgent: The Baseline Player
+The RandomAgent serves as a simple, non-adaptive participant in the game. Its main role is to provide a benchmark for the performance of the more advanced agents:
+
+Decision-Making: Selects actions completely at random, with no underlying strategy.
+Value: Acts as a control to compare the effectiveness of NN_Agent and RL_Agent.
+Purpose: Introduces unpredictability into the simulation, testing the robustness of the other agents’ strategies.
+Though unsophisticated, the RandomAgent plays a crucial role in validating the system.
+
+Communication Workflow
+The agents communicate and interact using JADE’s messaging system. The process typically follows these steps:
+
+Initialization: The MainAgent sends a "NewGame" message to all agents at the beginning of a round.
+Decision Phase:
+NN_Agent analyzes the game state and decides on an action using its neural network.
+RL_Agent selects an action based on its current policy and past experiences.
+RandomAgent picks an action arbitrarily.
+Result Processing: The MainAgent evaluates the actions, determines the outcomes, updates the scores, and informs the agents of the results.
+Learning Phase: The NN_Agent and RL_Agent refine their strategies based on the feedback from the round.
+This structured flow ensures that each agent operates effectively within the simulation.
+
+GUI Integration
+The graphical interface provides a real-time view of the simulation’s progress:
+
+Agent Actions: Displays what each agent is doing during every round.
+Game Results: Shows the outcomes of each round, including scores and performance metrics.
+Cumulative Tracking: Keeps a running tally of each agent’s score, making it easy to track overall progress.
+The GUI enhances usability, allowing for intuitive monitoring without needing to analyze raw data or logs.
+
+Known Issues
+As with any system, there are areas that need improvement:
+
+Game Stalling After Two Rounds: A bug occasionally causes the game to stop unexpectedly. This appears to be related to how messages are handled in certain scenarios. It’s under active investigation.
+Stock Display in GUI: The GUI sometimes fails to update stock information correctly. This issue seems tied to how the RandomAgent interacts with the MainAgent, and it’s also being worked on.
