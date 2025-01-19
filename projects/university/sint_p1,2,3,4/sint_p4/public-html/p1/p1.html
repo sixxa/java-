@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Submission</title>
+    <link rel="stylesheet" href="p1.css">
+</head>
+<body>
+    <img src= "rotten_tomatoes.png" id="clogo" alt="no logo">  </img>
+    <h1> Submission Form </h1>
+    
+    <form id="mForm" action="https://luis.sabucedo.webs.uvigo.es/p1/result1.php" method="post" enctype="application/x-www-form-urlencoded">
+    
+        <!-- User Name -->
+        <div class="form-row">
+            <label for="cname">Name:</label>
+            <input type="text" id="cname" name="cname" pattern="^[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,}\s[A-Za-zñÑáéíóúÁÉÍÓÚ]{3,}$"> 
+            <span class="error-message" id="cname-error"></span>
+        </div>
+    
+        <!-- Login -->
+        <div class="form-row">
+            <label for="clogin">Login:</label>
+            <input type="text" id="clogin" name="clogin">
+            <span class="error-message" id="clogin-error"></span>
+        </div>
+    
+        <!-- Password -->
+        <div class="form-row">
+            <label for="cpasswd">Password:</label>
+            <input type="password" id="cpasswd" name="cpasswd">
+            <span class="error-message" id="cpasswd-error"></span>
+        </div>
+    
+        <!-- DNI -->
+        <div class="form-row">
+            <label for="cdni">DNI:</label>
+            <input type="text" id="cdni" name="cdni">
+            <span class="error-message" id="cdni-error"></span>
+        </div>
+    
+        <!-- Email -->
+        <div class="form-row">
+            <label for="cemail">Email:</label>
+            <input type="email" id="cemail" name="cemail">
+            <span class="error-message" id="cemail-error"></span>
+        </div>
+    
+        <!-- Age -->
+        <div class="form-row">
+            <label>Age Range:</label>
+            <input type="radio" name="cage" value="under 5"> Under 5
+            <input type="radio" name="cage" value="between 5 and 15"> Between 5 and 15
+            <input type="radio" name="cage" value="between 16 and 18"> Between 16 and 18
+            <input type="radio" name="cage" value="over 18"> Over 18
+        </div>
+    
+        <!-- Genre -->
+        <fieldset>
+            <legend>Genres</legend>
+            <input type="checkbox" id="selectAll" value="all"> Select All
+            <input type="checkbox" id="deselectAll" value="all"> Deselect All
+            <input type="checkbox" name="cgenre[]" value="historical"> Historical
+            <input type="checkbox" name="cgenre[]" value="documentary"> Documentary
+            <input type="checkbox" name="cgenre[]" value="adventure"> Adventure
+            <input type="checkbox" name="cgenre[]" value="science fiction"> Science Fiction
+            <input type="checkbox" name="cgenre[]" value="animation"> Animation
+        </fieldset>
+    
+        <!-- Hidden Browser Field -->
+        <input type="hidden" id="cbrowser" name="cbrowser">
+    
+        <div class="form-row">
+            <label for="cencoding">Encoding:</label>
+            <select id="cencoding" name="cencoding">
+                <option value="application/x-www-form-urlencoded">application/x-www-form-urlencoded</option>
+                <option value="multipart/form-data">multipart/form-data</option>
+            </select>
+        
+            <label for="cmethod">Method:</label>
+            <select id="cmethod" name="cmethod">
+                <option value="get">GET</option>
+                <option value="post">POST</option>
+            </select>
+        </div>
+        <br><br>
+
+    
+        <!-- Buttons -->
+        <button id="submitbtn" type="submit">Submit</button>
+        <button type="reset">Reset</button>
+    
+    </form>
+    
+    <script src="p1.js"></script>
+    <footer>Tornike Sikharulidze</footer>
+</body>
+</html>

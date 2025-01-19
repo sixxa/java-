@@ -1,0 +1,112 @@
+/* Overall body and form styling */
+body {
+    font-family: "Tahoma", sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+}
+
+/* Adjusted Logo Size */
+#clogo {
+    height: 70px;
+    width: 70px;
+    border-radius: 8px;
+}
+
+/* Adjusted Title Size */
+h1 {
+    text-align: center;
+    color: #8b4513;
+    font-weight: 600;
+    font-size: 1.4em;
+    margin-top: 10px;
+}
+
+/* Form container styling */
+form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start; /* Align items to the left */
+    max-width: 700px; /* Set form width to prevent it from becoming too wide */
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #b0c4de;
+    background-color: #ffffff;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
+    border-radius: 8px;
+    position: relative;
+}
+
+/* Adjusted input field styles */
+.form-row input[type="text"],
+.form-row input[type="password"],
+.form-row input[type="email"],
+.form-row input[type="radio"],
+.form-row select {
+    width: 100%;  /* Take up full width of the container */
+    padding: 10px;
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    background-color: #fefefe;
+}
+
+/* Form row styling */
+.form-row {
+    margin: 10px;
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    width: 60%; /* Adjust form field width to create space for genres */
+}
+
+/* Label styling */
+.form-row label {
+    flex: 0 0 80px;
+}
+
+/* Genres field container styling */
+fieldset {
+    position: absolute; /* Fix genres to top-right */
+    top: 20px;
+    right: 20px; /* Align genres field to top-right */
+    width: 200px; /* Set width of genres field */
+    padding: 10px;
+    border: 1px solid #b0c4de;
+    background-color: #ffffff;
+    margin-top: 0;
+}
+
+/* Styling for genres checkboxes */
+fieldset legend {
+    font-weight: bold;
+    color: #333;
+}
+
+fieldset input[type="checkbox"] {
+    display: block;
+    margin: 5px 0;
+}
+
+/* Button styling */
+button {
+    margin-top: 15px;
+    padding: 12px 20px;
+    color: #fff;
+    background-color: #32cd32;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    width: 100%;
+}
+
+button:hover {
+    background-color: #2e8b57;
+}
+
+/* Error message styling */
+.error-message {
+    color: #d2691e;
+    font-size: 0.9em;
+    margin-top: 4px;
+    display: block;
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "clogin": "john_doe",
+    "cname": "John Doe"
+  },
+  {
+    "clogin": "jane_smith",
+    "cname": "Jane Smith"
+  },
+  {
+    "clogin": "user1",
+    "cname": "User"
+  },
+  {
+    "clogin": "user2",
+    "cname": "User2"
+  }
+]

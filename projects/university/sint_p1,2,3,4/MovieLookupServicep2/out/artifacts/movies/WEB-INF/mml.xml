@@ -1,0 +1,115 @@
+<movies>
+    <!-- English Movies -->
+    <movie idM="1" langs="en">
+        <title>Iron Man</title>
+        <year>2008</year>
+        <cast idC="1">
+            <name>Robert Downey Jr.</name>
+            <role>Iron Man</role>
+        </cast>
+        <cast idC="3">
+            <name>Gwyneth Paltrow</name>
+            <role>Pepper Potts</role>
+        </cast>
+    </movie>
+    <movie idM="2" langs="en">
+        <title>The Dark Knight</title>
+        <year>2008</year>
+        <cast idC="4">
+            <name>Christian Bale</name>
+            <role>Bruce Wayne / Batman</role>
+        </cast>
+        <cast idC="5">
+            <name>Heath Ledger</name>
+            <role>Joker</role>
+        </cast>
+    </movie>
+
+    <!-- French Movies -->
+    <movie idM="3" langs="fr">
+        <title>Léon: The Professional</title>
+        <year>1994</year>
+        <cast idC="2">
+            <name>Jean Reno</name>
+            <role>Leon</role>
+        </cast>
+        <cast idC="6">
+            <name>Natalie Portman</name>
+            <role>Mathilda</role>
+        </cast>
+    </movie>
+    <movie idM="4" langs="fr">
+        <title>Amélie</title>
+        <year>2001</year>
+        <cast idC="7">
+            <name>Audrey Tautou</name>
+            <role>Amélie Poulain</role>
+        </cast>
+    </movie>
+
+    <!-- Spanish Movies -->
+    <movie idM="5" langs="es">
+        <title>Pan's Labyrinth</title>
+        <year>2006</year>
+        <cast idC="8">
+            <name>Ivana Baquero</name>
+            <role>Ofelia</role>
+        </cast>
+        <cast idC="9">
+            <name>Sergi López</name>
+            <role>Capitán Vidal</role>
+        </cast>
+    </movie>
+    <movie idM="6" langs="es">
+        <title>The Sea Inside</title>
+        <year>2004</year>
+        <cast idC="10">
+            <name>Javier Bardem</name>
+            <role>Ramón Sampedro</role>
+        </cast>
+    </movie>
+
+    <!-- Hindi Movies -->
+    <movie idM="7" langs="hi">
+        <title>3 Idiots</title>
+        <year>2009</year>
+        <cast idC="11">
+            <name>Aamir Khan</name>
+            <role>Rancho</role>
+        </cast>
+        <cast idC="12">
+            <name>R. Madhavan</name>
+            <role>Farhan</role>
+        </cast>
+    </movie>
+    <movie idM="8" langs="hi">
+        <title>Lagaan</title>
+        <year>2001</year>
+        <cast idC="11">
+            <name>Aamir Khan</name>
+            <role>Bhuvan</role>
+        </cast>
+    </movie>
+
+    <!-- Japanese Movies -->
+    <movie idM="9" langs="ja">
+        <title>Spirited Away</title>
+        <year>2001</year>
+        <cast idC="13">
+            <name>Rumi Hiiragi</name>
+            <role>Chihiro</role>
+        </cast>
+        <cast idC="14">
+            <name>Miyu Irino</name>
+            <role>Haku</role>
+        </cast>
+    </movie>
+    <movie idM="10" langs="ja">
+        <title>Seven Samurai</title>
+        <year>1954</year>
+        <cast idC="15">
+            <name>Toshirō Mifune</name>
+            <role>Kikuchiyo</role>
+        </cast>
+    </movie>
+</movies>

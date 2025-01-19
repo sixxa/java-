@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="sint137">
+    <output-path>$PROJECT_DIR$/out/artifacts/sint137</output-path>
+    <root id="root">
+      <element id="dir-copy" path="$PROJECT_DIR$/src/main/webapp" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="MovieLookupService" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

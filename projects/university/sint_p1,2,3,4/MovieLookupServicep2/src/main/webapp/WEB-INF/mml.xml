@@ -1,0 +1,402 @@
+<movies>
+    <movie idM="mtc001" langs="en es fr">
+        <title>Top Gun</title>
+        <year>1986</year>
+        <cast idC="T001">
+            <name>Tom Cruise</name>
+            <role>main</role>
+        </cast>
+        <cast idC="M002">
+            <name>Kelly McGillis</name>
+            <role>main</role>
+        </cast>
+        <cast idC="V003">
+            <name>Val Kilmer</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="E004">
+            <name>Michael Ironside</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="tmc002" langs="en it es">
+        <title>Rain Man</title>
+        <year>1988</year>
+        <cast idC="T001">
+            <name>Tom Cruise</name>
+            <role>main</role>
+        </cast>
+        <cast idC="D005">
+            <name>Dustin Hoffman</name>
+            <role>main</role>
+        </cast>
+        <cast idC="V006">
+            <name>Valeria Golino</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="J007">
+            <name>Jerry Molen</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="cem001" langs="de fr it">
+        <title>Gran Torino</title>
+        <year>2008</year>
+        <cast idC="C008">
+            <name>Clint Eastwood</name>
+            <role>main</role>
+        </cast>
+        <cast idC="H009">
+            <name>Ahney Her</name>
+            <role>main</role>
+        </cast>
+        <cast idC="V010">
+            <name>Bee Vang</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="E011">
+            <name>Brian Haley</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="cet002" langs="en it es">
+        <title>Million Dollar Baby</title>
+        <year>2004</year>
+        <cast idC="C008">
+            <name>Clint Eastwood</name>
+            <role>main</role>
+        </cast>
+        <cast idC="H012">
+            <name>Hilary Swank</name>
+            <role>main</role>
+        </cast>
+        <cast idC="M053">
+            <name>Morgan Freeman</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="J014">
+            <name>Jay Baruchel</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="jrt001" langs="de es it">
+        <title>Pretty Woman</title>
+        <year>1990</year>
+        <cast idC="J015">
+            <name>Julia Roberts</name>
+            <role>main</role>
+        </cast>
+        <cast idC="R016">
+            <name>Richard Gere</name>
+            <role>main</role>
+        </cast>
+        <cast idC="H017">
+            <name>Héctor Elizondo</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="J018">
+            <name>Jason Alexander</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="jrt002" langs="en fr it">
+        <title>Erin Brockovich</title>
+        <year>2000</year>
+        <cast idC="J015">
+            <name>Julia Roberts</name>
+            <role>main</role>
+        </cast>
+        <cast idC="A019">
+            <name>Aaron Eckhart</name>
+            <role>main</role>
+        </cast>
+        <cast idC="D020">
+            <name>David Brisbin</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="E021">
+            <name>Albert Finney</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="auj001" langs="en es fr">
+        <title>Mr. And Mrs. Smith</title>
+        <year>2005</year>
+        <cast idC="A022">
+            <name>Angelina Jolie</name>
+            <role>main</role>
+        </cast>
+        <cast idC="B023">
+            <name>Brad Pitt</name>
+            <role>main</role>
+        </cast>
+        <cast idC="V024">
+            <name>Vince Vaughn</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="E025">
+            <name>Adam Brody</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="aju002" langs="es fr de">
+        <title>Maleficent</title>
+        <year>2014</year>
+        <cast idC="A022">
+            <name>Angelina Jolie</name>
+            <role>main</role>
+        </cast>
+        <cast idC="E026">
+            <name>Elle Fanning</name>
+            <role>main</role>
+        </cast>
+        <cast idC="S027">
+            <name>Sam Riley</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="I028">
+            <name>Imelda Staunton</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="tch003" langs="en es it">
+        <title>Mission: Impossible</title>
+        <year>1996</year>
+        <cast idC="T001">
+            <name>Tom Cruise</name>
+            <role>main</role>
+        </cast>
+        <cast idC="E030">
+            <name>Emmanuelle Béart</name>
+            <role>main</role>
+        </cast>
+        <cast idC="V030">
+            <name>Ving Rhames</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="J031">
+            <name>Jean Reno</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="ajh003" langs="de fr en">
+        <title>Lara Croft: Tomb Raider</title>
+        <year>2001</year>
+        <cast idC="A022">
+            <name>Angelina Jolie</name>
+            <role>main</role>
+        </cast>
+        <cast idC="N032">
+            <name>Noah Taylor</name>
+            <role>main</role>
+        </cast>
+        <cast idC="D033">
+            <name>Daniel Craig</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="I034">
+            <name>Iain Glen</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="tcl004" langs="en es it">
+        <title>Edge of Tomorrow</title>
+        <year>2014</year>
+        <cast idC="T001">
+            <name>Tom Cruise</name>
+            <role>main</role>
+        </cast>
+        <cast idC="E029">
+            <name>Emily Blunt</name>
+            <role>main</role>
+        </cast>
+        <cast idC="B035">
+            <name>Brendan Gleeson</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="P036">
+            <name>Bill Paxton</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="cet003" langs="en de es">
+        <title>Dirty Harry</title>
+        <year>1971</year>
+        <cast idC="C008">
+            <name>Clint Eastwood</name>
+            <role>main</role>
+        </cast>
+        <cast idC="R037">
+            <name>Reni Santoni</name>
+            <role>main</role>
+        </cast>
+        <cast idC="A038">
+            <name>Andrew Robinson</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="J039">
+            <name>John Vernon</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="ajt004" langs="es en fr">
+        <title>Salt</title>
+        <year>2010</year>
+        <cast idC="A022">
+            <name>Angelina Jolie</name>
+            <role>main</role>
+        </cast>
+        <cast idC="L040">
+            <name>Liev Schreiber</name>
+            <role>main</role>
+        </cast>
+        <cast idC="C041">
+            <name>Chiwetel Ejiofor</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="A042">
+            <name>August Diehl</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="jrk004" langs="fr de it">
+        <title>Notting Hill</title>
+        <year>1999</year>
+        <cast idC="J015">
+            <name>Julia Roberts</name>
+            <role>main</role>
+        </cast>
+        <cast idC="G043">
+            <name>Hugh Grant</name>
+            <role>main</role>
+        </cast>
+        <cast idC="R044">
+            <name>Rhys Ifans</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="E045">
+            <name>Emma Chambers</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="tcp005" langs="en es fr">
+        <title>Minority Report</title>
+        <year>2002</year>
+        <cast idC="T001">
+            <name>Tom Cruise</name>
+            <role>main</role>
+        </cast>
+        <cast idC="C046">
+            <name>Colin Farrell</name>
+            <role>main</role>
+        </cast>
+        <cast idC="S047">
+            <name>Samantha Morton</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="M048">
+            <name>Max von Sydow</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="cel004" langs="en it fr">
+        <title>The Mule</title>
+        <year>2018</year>
+        <cast idC="C008">
+            <name>Clint Eastwood</name>
+            <role>main</role>
+        </cast>
+        <cast idC="B049">
+            <name>Bradley Cooper</name>
+            <role>main</role>
+        </cast>
+        <cast idC="D050">
+            <name>Dianne Wiest</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="M051">
+            <name>Michael Peña</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="ajr005" langs="de en it">
+        <title>Wanted</title>
+        <year>2008</year>
+        <cast idC="A022">
+            <name>Angelina Jolie</name>
+            <role>main</role>
+        </cast>
+        <cast idC="J052">
+            <name>James McAvoy</name>
+            <role>main</role>
+        </cast>
+        <cast idC="M053">
+            <name>Morgan Freeman</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="C054">
+            <name>Common</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="jrs005" langs="en es fr">
+        <title>Runaway Bride</title>
+        <year>1999</year>
+        <cast idC="J015">
+            <name>Julia Roberts</name>
+            <role>main</role>
+        </cast>
+        <cast idC="R016">
+            <name>Richard Gere</name>
+            <role>main</role>
+        </cast>
+        <cast idC="J019">
+            <name>Joan Cusack</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="P055">
+            <name>Paul Dooley</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="tca006" langs="fr en de">
+        <title>The Last Samurai</title>
+        <year>2003</year>
+        <cast idC="T001">
+            <name>Tom Cruise</name>
+            <role>main</role>
+        </cast>
+        <cast idC="K056">
+            <name>Ken Watanabe</name>
+            <role>main</role>
+        </cast>
+        <cast idC="T057">
+            <name>Timothy Spall</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="H058">
+            <name>Hiroyuki Sanada</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+    <movie idM="cey005" langs="en es fr">
+        <title>Invictus</title>
+        <year>2009</year>
+        <cast idC="M053">
+            <name>Morgan Freeman</name>
+            <role>main</role>
+        </cast>
+        <cast idC="D059">
+            <name>Matt Damon</name>
+            <role>main</role>
+        </cast>
+        <cast idC="T060">
+            <name>Tony Kgoroge</name>
+            <role>supporting</role>
+        </cast>
+        <cast idC="A061">
+            <name>Adjoa Andoh</name>
+            <role>extra</role>
+        </cast>
+    </movie>
+</movies>
