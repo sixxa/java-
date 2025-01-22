@@ -5,4 +5,6 @@ import com.sixa.cqrsbankingapp.service.CommandService;
 import com.sixa.cqrsbankingapp.service.QueryService;
 
 public interface ClientService extends QueryService<Client>, CommandService<Client> {
+
+    boolean existsByUsername(String username);
 }

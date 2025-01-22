@@ -1,6 +1,7 @@
 package com.sixa.cqrsbankingapp.events;
 
 import com.sixa.cqrsbankingapp.domain.aggregate.Aggregate;
+import com.sixa.cqrsbankingapp.domain.model.Card;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CardCreateEvent extends AbstractEvent {
 
-    public CardCreateEvent(Object payload) {
+    public CardCreateEvent(Card payload) {
         super(null,EventType.CARD_CREATE, payload);
     }
 

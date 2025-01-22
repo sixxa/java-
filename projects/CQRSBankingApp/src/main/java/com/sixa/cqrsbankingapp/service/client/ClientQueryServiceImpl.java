@@ -18,4 +18,9 @@ public class ClientQueryServiceImpl implements ClientQueryService {
     public Client getById(UUID id) {
         return repository.findById(id).orElseThrow(ResourceNotFoundException::new);
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        return repository.existsByUsername(username);
+    }
 }

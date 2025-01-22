@@ -1,6 +1,7 @@
 package com.sixa.cqrsbankingapp.events;
 
 import com.sixa.cqrsbankingapp.domain.aggregate.Aggregate;
+import com.sixa.cqrsbankingapp.domain.model.Transaction;
 import jakarta.persistence.Entity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +13,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class TransactionCreateEvent extends AbstractEvent{
 
-    public TransactionCreateEvent(Object payload) {
+    public TransactionCreateEvent(Transaction payload) {
         super(null,EventType.TRANSACTION_CREATE, payload);
     }
 
