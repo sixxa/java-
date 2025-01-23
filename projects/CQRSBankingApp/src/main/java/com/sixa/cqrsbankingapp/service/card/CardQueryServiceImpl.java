@@ -5,7 +5,6 @@ import com.sixa.cqrsbankingapp.domain.model.Card;
 import com.sixa.cqrsbankingapp.repository.CardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
 import java.util.UUID;
 
 @Service
@@ -17,5 +16,10 @@ public class CardQueryServiceImpl implements CardQueryService {
     @Override
     public Card getById(UUID id) {
         return repository.findById(id).orElseThrow(ResourceNotFoundException::new);
+    }
+
+    @Override
+    public boolean existsByNumberAndDate(String number, String date) {
+        return repository.existsByNumberAndDate(number, date);
     }
 }

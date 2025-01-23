@@ -10,8 +10,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TransactionServiceImpl implements TransactionService {
 
-    private TransactionCommandService commandService;
-    private TransactionQueryService queryService;
+    private final TransactionCommandService commandService;
+    private final TransactionQueryService queryService;
 
     @Override
     public void create(Transaction object) {

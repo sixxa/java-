@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AccountCommandServiceImpl implements AccountCommandService {
 
-    private EventService eventService;
+    private final EventService eventService;
 
     @Override
     public void create(Account object) {

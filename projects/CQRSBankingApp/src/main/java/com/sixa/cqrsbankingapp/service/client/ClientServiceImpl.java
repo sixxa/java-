@@ -10,8 +10,8 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ClientServiceImpl implements ClientService {
 
-    private ClientCommandService commandService;
-    private ClientQueryService queryService;
+    private final ClientCommandService commandService;
+    private final ClientQueryService queryService;
 
 
     @Override
