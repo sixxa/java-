@@ -6,7 +6,6 @@ import com.sixa.microservices.orderservice.event.OrderPlacedEvent;
 import com.sixa.microservices.orderservice.model.Order;
 import com.sixa.microservices.orderservice.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
-import org.apache.kafka.clients.producer.KafkaProducer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.core.KafkaTemplate;
