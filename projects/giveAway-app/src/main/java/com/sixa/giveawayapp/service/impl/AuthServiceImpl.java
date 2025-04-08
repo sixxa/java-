@@ -23,7 +23,7 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public void register(RegisterRequest request) {
-        // Check if the username or email already exists
+
         if (userRepository.findByUsername(request.getUsername()) != null) {
             throw new RuntimeException("Username already exists");
         }
@@ -32,43 +32,34 @@ public class AuthServiceImpl implements AuthService {
             throw new RuntimeException("Email already exists");
         }
 
-        // Map RegisterRequest DTO to User entity using MapStruct
         User newUser = userMapper.registerRequestToUser(request);
 
-        // Encode the password
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         newUser.setPassword(encodedPassword);
 
-        // Set default role (you can adjust this depending on your requirements)
-        newUser.setRole(Role.USER); // Assuming Role is an enum, adjust as needed
+        newUser.setRole(Role.USER);
 
-        // Save the new user to the database
         userRepository.save(newUser);
     }
 
     public String login(LoginRequest request) {
-        // Check if the provided value is email or username
         String usernameOrEmail = request.getUsernameOrEmail();
         User user = findUserByUsernameOrEmail(usernameOrEmail);
 
         if (user == null) {
             throw new RuntimeException("User not found");
         }
-        // Check if the password is correct
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
-        // Generate JWT token
-        return jwtUtil.generateToken(user.getUsername(), user.getRole());  // Adjust role extraction as necessary
+        return jwtUtil.generateToken(user.getUsername(), user.getRole());
     }
 
     @Override
     public User findUserByUsernameOrEmail(String usernameOrEmail) {
         if (usernameOrEmail.contains("@")) {
-            // It's an email, search by email
-            return userRepository.findByEmail(usernameOrEmail);  // Make sure you have an email field in your User model
+            return userRepository.findByEmail(usernameOrEmail);
         } else {
-            // It's a username, search by username
             return userRepository.findByUsername(usernameOrEmail);
         }
     }

@@ -20,19 +20,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .csrf(csrf -> csrf.disable()) // Disable CSRF protection if needed for Swagger
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/v1/auth/login", "/api/v1/auth/register", "/css/**", "/js/**", "/images/**",
-                                "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**") // Allow access to these resources
+                                "/swagger-ui.html", "/swagger-ui/**", "/v3/api-docs/**")
                         .permitAll()
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
-                        .disable() // Disable form-based login (since we want to use custom login API)
+                        .disable()
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
-                        .logoutSuccessUrl("/api/v1/auth/login") // Redirect to /api/v1/auth/login after successful logout
+                        .logoutSuccessUrl("/api/v1/auth/login")
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                         .permitAll()

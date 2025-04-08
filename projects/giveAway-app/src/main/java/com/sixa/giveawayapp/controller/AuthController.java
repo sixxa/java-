@@ -24,7 +24,7 @@ public class AuthController {
             authService.register(request);
             return ResponseEntity.ok("User registered successfully!");
         } catch (RuntimeException e) {
-            return ResponseEntity.badRequest().body(e.getMessage());  // If email already exists, return error message
+            return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
