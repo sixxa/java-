@@ -18,9 +18,12 @@ public class Item {
     private String description;
     private Integer price;  // If price is 0, it means the item is for giveaway
     private String category;
-    private String location;  // Item-specific location
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;  // Reference to the Location entity
 
     @ManyToOne
     @JoinColumn(name = "user_id")
