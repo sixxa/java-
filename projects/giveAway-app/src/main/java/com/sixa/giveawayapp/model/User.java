@@ -1,7 +1,15 @@
 package com.sixa.giveawayapp.model;
 
-import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.persistence.Id;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.EnumType;
 import lombok.Data;
+import jakarta.persistence.GenerationType;
 import java.util.List;
 
 @Data
@@ -19,6 +27,7 @@ public class User {
     private String number;
 
     @OneToMany(mappedBy = "user")
+    @JsonManagedReference
     private List<Item> items;
 
     @Enumerated(EnumType.STRING)

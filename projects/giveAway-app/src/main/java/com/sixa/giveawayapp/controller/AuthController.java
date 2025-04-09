@@ -2,7 +2,7 @@ package com.sixa.giveawayapp.controller;
 
 import com.sixa.giveawayapp.DTO.request.LoginRequest;
 import com.sixa.giveawayapp.DTO.request.RegisterRequest;
-import com.sixa.giveawayapp.service.impl.AuthServiceImpl;
+import com.sixa.giveawayapp.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor(onConstructor_ = {@Autowired})
 public class AuthController {
 
-    private final AuthServiceImpl authService;
+    private final AuthService authService;
 
     @PostMapping("/register")
     public ResponseEntity<String> register(@RequestBody RegisterRequest request) {

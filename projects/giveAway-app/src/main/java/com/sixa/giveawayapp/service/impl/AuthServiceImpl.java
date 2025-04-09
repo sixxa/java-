@@ -52,7 +52,7 @@ public class AuthServiceImpl implements AuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
-        return jwtUtil.generateToken(user.getUsername(), user.getRole());
+        return jwtUtil.generateToken(user.getId(), user.getRole());
     }
 
     @Override
