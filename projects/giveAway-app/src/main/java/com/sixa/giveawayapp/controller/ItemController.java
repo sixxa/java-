@@ -6,6 +6,7 @@ import com.sixa.giveawayapp.DTO.response.ItemResponse;
 import com.sixa.giveawayapp.service.ItemService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,8 +29,12 @@ public class ItemController {
 
     @GetMapping
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<List<ItemResponse>> getAllItems(FilterItemRequest filterItemRequest) {
-        List<ItemResponse> items = itemService.getAllItems(filterItemRequest);
+    public ResponseEntity<Page<ItemResponse>> getAllItems(
+            FilterItemRequest filterItemRequest,
+             @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Page<ItemResponse> items = itemService.getFilteredItems(filterItemRequest, page, size);
         return ResponseEntity.ok(items);
     }
 }

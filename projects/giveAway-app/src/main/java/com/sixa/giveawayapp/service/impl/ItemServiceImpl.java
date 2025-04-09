@@ -11,6 +11,10 @@ import com.sixa.giveawayapp.repository.UserRepository;
 import com.sixa.giveawayapp.service.ItemService;
 import com.sixa.giveawayapp.specification.ItemSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +52,7 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<ItemResponse> getAllItems(FilterItemRequest request) {
+    public Page<ItemResponse> getFilteredItems(FilterItemRequest request, int page, int size) {
         Specification<Item> spec = Specification.where(null);
 
         if (request.getName() != null) {
@@ -88,8 +92,11 @@ public class ItemServiceImpl implements ItemService {
             spec = spec.and(ItemSpecification.hasAddress(request.getAddress()));
         }
 
-        List<Item> items = itemRepository.findAll(spec);
-        return items.stream().map(itemMapper::toItemResponse).toList();
+        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
+
+        Page<Item> itemPage = itemRepository.findAll(spec, pageable);
+
+        return itemPage.map(itemMapper::toItemResponse);
     }
 
 
