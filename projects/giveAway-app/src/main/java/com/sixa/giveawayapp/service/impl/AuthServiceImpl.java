@@ -12,6 +12,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthServiceImpl implements AuthService {
@@ -24,11 +26,11 @@ public class AuthServiceImpl implements AuthService {
     @Override
     public void register(RegisterRequest request) {
 
-        if (userRepository.findByUsername(request.getUsername()) != null) {
+        if (userRepository.findByUsername(request.getUsername()).isPresent()) {
             throw new RuntimeException("Username already exists");
         }
 
-        if (userRepository.findByEmail(request.getEmail()) != null) {
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
         }
 
@@ -44,19 +46,19 @@ public class AuthServiceImpl implements AuthService {
 
     public String login(LoginRequest request) {
         String usernameOrEmail = request.getUsernameOrEmail();
-        User user = findUserByUsernameOrEmail(usernameOrEmail);
+        Optional<User> user = findUserByUsernameOrEmail(usernameOrEmail);
 
-        if (user == null) {
+        if (user.isEmpty()) {
             throw new RuntimeException("User not found");
         }
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(request.getPassword(), user.get().getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
-        return jwtUtil.generateToken(user.getId(), user.getRole());
+        return jwtUtil.generateToken(user.get().getId(), user.get().getRole());
     }
 
     @Override
-    public User findUserByUsernameOrEmail(String usernameOrEmail) {
+    public Optional<User> findUserByUsernameOrEmail(String usernameOrEmail) {
         if (usernameOrEmail.contains("@")) {
             return userRepository.findByEmail(usernameOrEmail);
         } else {

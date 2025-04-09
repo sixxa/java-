@@ -4,11 +4,13 @@ import com.sixa.giveawayapp.DTO.request.LoginRequest;
 import com.sixa.giveawayapp.DTO.request.RegisterRequest;
 import com.sixa.giveawayapp.model.User;
 
+import java.util.Optional;
+
 public interface AuthService {
 
     String login(LoginRequest loginRequest);
 
     void register(RegisterRequest signupRequest);
 
-    User findUserByUsernameOrEmail(String usernameOrEmail);
+    Optional<User> findUserByUsernameOrEmail(String usernameOrEmail);
 }

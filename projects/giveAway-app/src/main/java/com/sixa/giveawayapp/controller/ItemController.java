@@ -1,5 +1,6 @@
 package com.sixa.giveawayapp.controller;
 
+import com.sixa.giveawayapp.DTO.request.FilterItemRequest;
 import com.sixa.giveawayapp.DTO.request.ItemRequest;
 import com.sixa.giveawayapp.DTO.response.ItemResponse;
 import com.sixa.giveawayapp.service.ItemService;
@@ -27,8 +28,8 @@ public class ItemController {
 
     @GetMapping
     @SecurityRequirement(name = "Bearer Authentication")
-    public ResponseEntity<List<ItemResponse>> getAllItems() {
-        List<ItemResponse> items = itemService.getAllItems();
+    public ResponseEntity<List<ItemResponse>> getAllItems(FilterItemRequest filterItemRequest) {
+        List<ItemResponse> items = itemService.getAllItems(filterItemRequest);
         return ResponseEntity.ok(items);
     }
 }

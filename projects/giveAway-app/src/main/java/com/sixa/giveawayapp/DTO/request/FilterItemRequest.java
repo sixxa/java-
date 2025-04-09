@@ -2,16 +2,15 @@ package com.sixa.giveawayapp.DTO.request;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class ItemRequest {
+public class FilterItemRequest {
+
     private String name;
-    private String description;
-    private Integer price;
     private String category;
+    private Integer minPrice;
+    private Integer maxPrice;
+    private Boolean ForGiveaway;
     private String country;
     private String city;
     private String address;
-    private List<String> images;
 }
