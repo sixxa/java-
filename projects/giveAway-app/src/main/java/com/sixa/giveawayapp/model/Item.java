@@ -28,7 +28,6 @@ public class Item {
     private String name;
     private String description;
     private Integer price;  // If price is 0, it means the item is for giveaway
-    private String category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
     private String address;
@@ -36,6 +35,10 @@ public class Item {
     @ManyToOne
     @JoinColumn(name = "location_id")
     private Location location;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id") // Foreign key to Category
+    private Category category;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

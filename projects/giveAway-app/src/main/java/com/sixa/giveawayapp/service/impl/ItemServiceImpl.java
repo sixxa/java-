@@ -4,9 +4,11 @@ import com.sixa.giveawayapp.DTO.request.FilterItemRequest;
 import com.sixa.giveawayapp.DTO.request.ItemRequest;
 import com.sixa.giveawayapp.DTO.response.ItemResponse;
 import com.sixa.giveawayapp.mapper.ItemMapper;
+import com.sixa.giveawayapp.model.Category;
 import com.sixa.giveawayapp.model.Item;
 import com.sixa.giveawayapp.model.Location;
 import com.sixa.giveawayapp.model.User;
+import com.sixa.giveawayapp.repository.CategoryRepository;  // Added import for CategoryRepository
 import com.sixa.giveawayapp.repository.ItemRepository;
 import com.sixa.giveawayapp.repository.LocationRepository;
 import com.sixa.giveawayapp.repository.UserRepository;
@@ -27,6 +29,7 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
+    private final CategoryRepository categoryRepository;  // Added category repository
     private final ItemMapper itemMapper;
 
     @Override
@@ -44,9 +47,18 @@ public class ItemServiceImpl implements ItemService {
             return locationRepository.save(newLocation);
         });
 
+        // Get or create category
+        Category category = categoryRepository.findByName(itemRequest.getCategory())
+                .orElseGet(() -> {
+                    Category newCategory = new Category();
+                    newCategory.setName(itemRequest.getCategory());
+                    return categoryRepository.save(newCategory);
+                });
+
         Item item = itemMapper.toItem(itemRequest);
         item.setUser(user);
         item.setLocation(location);
+        item.setCategory(category);  // Set the category for the item
         item.setAddress(itemRequest.getAddress());
 
         // Save first to get item ID for images
