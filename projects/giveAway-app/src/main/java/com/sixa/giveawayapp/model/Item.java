@@ -31,9 +31,11 @@ public class Item {
     private String category;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-    private String country;
-    private String city;
     private String address;
+
+    @ManyToOne
+    @JoinColumn(name = "location_id")
+    private Location location;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

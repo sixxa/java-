@@ -5,8 +5,10 @@ import com.sixa.giveawayapp.DTO.request.ItemRequest;
 import com.sixa.giveawayapp.DTO.response.ItemResponse;
 import com.sixa.giveawayapp.mapper.ItemMapper;
 import com.sixa.giveawayapp.model.Item;
+import com.sixa.giveawayapp.model.Location;
 import com.sixa.giveawayapp.model.User;
 import com.sixa.giveawayapp.repository.ItemRepository;
+import com.sixa.giveawayapp.repository.LocationRepository;
 import com.sixa.giveawayapp.repository.UserRepository;
 import com.sixa.giveawayapp.service.ItemService;
 import com.sixa.giveawayapp.specification.ItemSpecification;
@@ -18,15 +20,13 @@ import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
 @Service
 @RequiredArgsConstructor
 public class ItemServiceImpl implements ItemService {
 
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
+    private final LocationRepository locationRepository;
     private final ItemMapper itemMapper;
 
     @Override
@@ -34,16 +34,24 @@ public class ItemServiceImpl implements ItemService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
+        // Get or create location
+        Location location = locationRepository.findByCountryAndCity(
+                itemRequest.getCountry(), itemRequest.getCity()
+        ).orElseGet(() -> {
+            Location newLocation = new Location();
+            newLocation.setCountry(itemRequest.getCountry());
+            newLocation.setCity(itemRequest.getCity());
+            return locationRepository.save(newLocation);
+        });
+
         Item item = itemMapper.toItem(itemRequest);
         item.setUser(user);
-        item.setCountry(itemRequest.getCountry());
-        item.setCity(itemRequest.getCity());
+        item.setLocation(location);
         item.setAddress(itemRequest.getAddress());
 
-        // Save first to get item ID for images (if needed)
+        // Save first to get item ID for images
         Item savedItem = itemRepository.save(item);
 
-        // Set `item` for each image
         if (savedItem.getImages() != null) {
             savedItem.getImages().forEach(image -> image.setItem(savedItem));
         }
@@ -64,28 +72,26 @@ public class ItemServiceImpl implements ItemService {
         }
 
         if (request.getForGiveaway() != null) {
-            if (request.getForGiveaway()) {
-                spec = spec.and(ItemSpecification.isForGiveaway());
-            } else {
-                spec = spec.and(ItemSpecification.isNotForGiveaway());
-            }
+            spec = spec.and(request.getForGiveaway()
+                    ? ItemSpecification.isForGiveaway()
+                    : ItemSpecification.isNotForGiveaway());
         }
 
-// Apply price filters regardless of the giveaway flag
         if (request.getMinPrice() != null) {
             spec = spec.and(ItemSpecification.hasMinPrice(request.getMinPrice()));
         }
+
         if (request.getMaxPrice() != null) {
             spec = spec.and(ItemSpecification.hasMaxPrice(request.getMaxPrice()));
         }
 
-
+        // Use nested location filters
         if (request.getCountry() != null) {
-            spec = spec.and(ItemSpecification.hasCountry(request.getCountry()));
+            spec = spec.and(ItemSpecification.hasLocationCountry(request.getCountry()));
         }
 
         if (request.getCity() != null) {
-            spec = spec.and(ItemSpecification.hasCity(request.getCity()));
+            spec = spec.and(ItemSpecification.hasLocationCity(request.getCity()));
         }
 
         if (request.getAddress() != null) {
@@ -93,12 +99,8 @@ public class ItemServiceImpl implements ItemService {
         }
 
         Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdAt"));
-
         Page<Item> itemPage = itemRepository.findAll(spec, pageable);
 
         return itemPage.map(itemMapper::toItemResponse);
     }
-
-
-
 }

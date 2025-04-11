@@ -21,6 +21,8 @@ public interface ItemMapper {
 
     @Mapping(source = "user", target = "user")
     @Mapping(source = "images", target = "images", qualifiedByName = "imageListToStringList")
+    @Mapping(source = "location.country", target = "country")
+    @Mapping(source = "location.city", target = "city")
     ItemResponse toItemResponse(Item item);
 
     SimpleUserDTO toSimpleUserDTO(User user);
@@ -48,5 +50,4 @@ public interface ItemMapper {
                 .map(Image::getImagePath)
                 .collect(Collectors.toList());
     }
-
 }

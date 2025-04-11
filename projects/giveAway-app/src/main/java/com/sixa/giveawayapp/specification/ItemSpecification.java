@@ -1,7 +1,7 @@
 package com.sixa.giveawayapp.specification;
 
-import org.springframework.data.jpa.domain.Specification;
 import com.sixa.giveawayapp.model.Item;
+import org.springframework.data.jpa.domain.Specification;
 
 public class ItemSpecification {
 
@@ -25,14 +25,14 @@ public class ItemSpecification {
                 criteriaBuilder.lessThanOrEqualTo(root.get("price"), maxPrice);
     }
 
-    public static Specification<Item> hasCountry(String country) {
+    public static Specification<Item> hasLocationCountry(String country) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("country"), country);
+                criteriaBuilder.equal(root.get("location").get("country"), country);
     }
 
-    public static Specification<Item> hasCity(String city) {
+    public static Specification<Item> hasLocationCity(String city) {
         return (root, query, criteriaBuilder) ->
-                criteriaBuilder.equal(root.get("city"), city);
+                criteriaBuilder.equal(root.get("location").get("city"), city);
     }
 
     public static Specification<Item> hasAddress(String address) {
@@ -50,4 +50,3 @@ public class ItemSpecification {
                 criteriaBuilder.notEqual(root.get("price"), 0);
     }
 }
-
