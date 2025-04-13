@@ -2,6 +2,7 @@ package com.sixa.giveawayapp.controller;
 
 import com.sixa.giveawayapp.DTO.request.FilterItemRequest;
 import com.sixa.giveawayapp.DTO.request.ItemRequest;
+import com.sixa.giveawayapp.DTO.response.ItemDetailResponse;
 import com.sixa.giveawayapp.DTO.response.ItemResponse;
 import com.sixa.giveawayapp.service.ItemService;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
@@ -35,4 +36,12 @@ public class ItemController {
         Page<ItemResponse> items = itemService.getFilteredItems(filterItemRequest, page, size);
         return ResponseEntity.ok(items);
     }
+
+    @GetMapping("/{itemId}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ItemDetailResponse> getItemById(@PathVariable Integer itemId) {
+        ItemDetailResponse itemDetail = itemService.getItemById(itemId);
+        return ResponseEntity.ok(itemDetail);
+    }
+
 }

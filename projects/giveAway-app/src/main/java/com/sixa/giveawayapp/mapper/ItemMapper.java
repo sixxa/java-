@@ -1,6 +1,7 @@
 package com.sixa.giveawayapp.mapper;
 
 import com.sixa.giveawayapp.DTO.request.ItemRequest;
+import com.sixa.giveawayapp.DTO.response.ItemDetailResponse;
 import com.sixa.giveawayapp.DTO.response.ItemResponse;
 import com.sixa.giveawayapp.DTO.SimpleUserDTO;
 import com.sixa.giveawayapp.model.Category;
@@ -76,4 +77,11 @@ public interface ItemMapper {
 
         return category.getName();  // Assuming category has a 'name' field
     }
+
+    @Mapping(source = "user", target = "user")
+    @Mapping(source = "images", target = "images", qualifiedByName = "imageListToStringList")
+    @Mapping(source = "location.country", target = "country")
+    @Mapping(source = "location.city", target = "city")
+    @Mapping(source = "category", target = "category", qualifiedByName = "categoryToCategoryName")
+    ItemDetailResponse toItemDetailResponse(Item item);
 }

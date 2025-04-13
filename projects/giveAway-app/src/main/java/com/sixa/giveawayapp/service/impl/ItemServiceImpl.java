@@ -2,6 +2,7 @@ package com.sixa.giveawayapp.service.impl;
 
 import com.sixa.giveawayapp.DTO.request.FilterItemRequest;
 import com.sixa.giveawayapp.DTO.request.ItemRequest;
+import com.sixa.giveawayapp.DTO.response.ItemDetailResponse;
 import com.sixa.giveawayapp.DTO.response.ItemResponse;
 import com.sixa.giveawayapp.mapper.ItemMapper;
 import com.sixa.giveawayapp.model.Category;
@@ -115,4 +116,12 @@ public class ItemServiceImpl implements ItemService {
 
         return itemPage.map(itemMapper::toItemResponse);
     }
+
+    @Override
+    public ItemDetailResponse getItemById(Integer itemId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+        return itemMapper.toItemDetailResponse(item);
+    }
+
 }
