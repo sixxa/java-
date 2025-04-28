@@ -12,5 +12,6 @@ public interface ItemService {
     ItemResponse editItem(Integer id, ItemRequest itemRequest, Integer userId);
     Page<ItemResponse> getFilteredItems(FilterItemRequest filterItemRequest, int page, int size);
     ItemDetailResponse getItemById(Integer itemId);
+    void deleteItem(Integer itemId, Integer userId);
 
 }

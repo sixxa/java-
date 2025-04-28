@@ -53,5 +53,13 @@ public class ItemController {
         return ResponseEntity.ok(updatedItem);
     }
 
+    @DeleteMapping("/{itemId}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<Void> deleteItem(@PathVariable Integer itemId,
+                                           @RequestAttribute("userId") Integer userId) {
+        itemService.deleteItem(itemId, userId);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

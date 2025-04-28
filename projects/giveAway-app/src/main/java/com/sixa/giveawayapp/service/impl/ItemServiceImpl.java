@@ -171,4 +171,17 @@ public class ItemServiceImpl implements ItemService {
         return itemMapper.toItemDetailResponse(item);
     }
 
+
+    public void deleteItem(Integer itemId, Integer userId) {
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        if (!item.getUser().getId().equals(userId)) {
+            throw new RuntimeException("You do not have permission to delete this item");
+        }
+
+        itemRepository.delete(item);
+    }
+
+
 }
