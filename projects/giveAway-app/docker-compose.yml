@@ -8,9 +8,9 @@ services:
     depends_on:
       - db
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5433/giveaway_db
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/giveaway_db
       SPRING_DATASOURCE_USERNAME: postgres
-      SPRING_DATASOURCE_PASSWORD: atomhtml
+      SPRING_DATASOURCE_PASSWORD: password
 
   db:
     image: postgres:16

@@ -9,7 +9,7 @@ import com.sixa.giveawayapp.model.Category;
 import com.sixa.giveawayapp.model.Item;
 import com.sixa.giveawayapp.model.Location;
 import com.sixa.giveawayapp.model.User;
-import com.sixa.giveawayapp.repository.CategoryRepository;  // Added import for CategoryRepository
+import com.sixa.giveawayapp.repository.CategoryRepository;
 import com.sixa.giveawayapp.repository.ItemRepository;
 import com.sixa.giveawayapp.repository.LocationRepository;
 import com.sixa.giveawayapp.repository.UserRepository;
@@ -30,13 +30,17 @@ public class ItemServiceImpl implements ItemService {
     private final ItemRepository itemRepository;
     private final UserRepository userRepository;
     private final LocationRepository locationRepository;
-    private final CategoryRepository categoryRepository;  // Added category repository
+    private final CategoryRepository categoryRepository;
     private final ItemMapper itemMapper;
 
     @Override
     public ItemResponse createItem(ItemRequest itemRequest, Integer userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Get or return a message if the category doesn't exist
+        Category category = categoryRepository.findByNameIgnoreCase(itemRequest.getCategory())
+                .orElseThrow(() -> new RuntimeException("Category '" + itemRequest.getCategory() + "' does not exist"));
 
         // Get or create location
         Location location = locationRepository.findByCountryAndCity(
@@ -48,21 +52,12 @@ public class ItemServiceImpl implements ItemService {
             return locationRepository.save(newLocation);
         });
 
-        // Get or create category
-        Category category = categoryRepository.findByName(itemRequest.getCategory())
-                .orElseGet(() -> {
-                    Category newCategory = new Category();
-                    newCategory.setName(itemRequest.getCategory());
-                    return categoryRepository.save(newCategory);
-                });
-
         Item item = itemMapper.toItem(itemRequest);
         item.setUser(user);
         item.setLocation(location);
-        item.setCategory(category);  // Set the category for the item
+        item.setCategory(category);
         item.setAddress(itemRequest.getAddress());
 
-        // Save first to get item ID for images
         Item savedItem = itemRepository.save(item);
 
         if (savedItem.getImages() != null) {
@@ -71,6 +66,59 @@ public class ItemServiceImpl implements ItemService {
 
         return itemMapper.toItemResponse(savedItem);
     }
+
+    @Override
+    public ItemResponse editItem(Integer id, ItemRequest itemRequest, Integer userId) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        if (!item.getUser().getId().equals(userId)) {
+            throw new RuntimeException("You are not authorized to edit this item");
+        }
+
+        if (itemRequest.getName() != null && !itemRequest.getName().trim().isEmpty()) {
+            item.setName(itemRequest.getName());
+        }
+        if (itemRequest.getDescription() != null && !itemRequest.getDescription().trim().isEmpty()) {
+            item.setDescription(itemRequest.getDescription());
+        }
+        if (itemRequest.getPrice() != null) {
+            item.setPrice(itemRequest.getPrice());
+        }
+        if (itemRequest.getAddress() != null && !itemRequest.getAddress().trim().isEmpty()) {
+            item.setAddress(itemRequest.getAddress());
+        }
+
+        if (itemRequest.getCountry() != null && itemRequest.getCity() != null &&
+                !itemRequest.getCountry().trim().isEmpty() && !itemRequest.getCity().trim().isEmpty()) {
+            Location location = locationRepository.findByCountryAndCity(
+                    itemRequest.getCountry(), itemRequest.getCity()
+            ).orElseGet(() -> {
+                Location newLocation = new Location();
+                newLocation.setCountry(itemRequest.getCountry());
+                newLocation.setCity(itemRequest.getCity());
+                return locationRepository.save(newLocation);
+            });
+            item.setLocation(location);
+        }
+
+        // Get or return a message if the category doesn't exist
+        if (itemRequest.getCategory() != null && !itemRequest.getCategory().trim().isEmpty()) {
+            Category category = categoryRepository.findByNameIgnoreCase(itemRequest.getCategory())
+                    .orElseThrow(() -> new RuntimeException("Category '" + itemRequest.getCategory() + "' does not exist"));
+            item.setCategory(category);
+        }
+
+        if (itemRequest.getImages() != null && !itemRequest.getImages().isEmpty()) {
+            item.setImages(itemMapper.stringListToImageList(itemRequest.getImages()));
+        }
+
+        Item updatedItem = itemRepository.save(item);
+
+        return itemMapper.toItemResponse(updatedItem);
+    }
+
+
 
     @Override
     public Page<ItemResponse> getFilteredItems(FilterItemRequest request, int page, int size) {
@@ -98,7 +146,6 @@ public class ItemServiceImpl implements ItemService {
             spec = spec.and(ItemSpecification.hasMaxPrice(request.getMaxPrice()));
         }
 
-        // Use nested location filters
         if (request.getCountry() != null) {
             spec = spec.and(ItemSpecification.hasLocationCountry(request.getCountry()));
         }

@@ -44,4 +44,14 @@ public class ItemController {
         return ResponseEntity.ok(itemDetail);
     }
 
+    @PutMapping("/{id}")
+    @SecurityRequirement(name = "Bearer Authentication")
+    public ResponseEntity<ItemResponse> editItem(@PathVariable Integer id,
+                                                 @RequestBody ItemRequest itemRequest,
+                                                 @RequestAttribute("userId") Integer userId) {
+        ItemResponse updatedItem = itemService.editItem(id, itemRequest, userId);
+        return ResponseEntity.ok(updatedItem);
+    }
+
+
 }
